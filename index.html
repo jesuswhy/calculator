@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тесты</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #333;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        .test-container {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            border-radius: 15px;
+            width: 650px;
+            margin-bottom: 30px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #444;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .button.red {
+            background-color: #f44336;
+        }
+        .button.red:hover {
+            background-color: #e53935;
+        }
+        #timer, #timer2 {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .red-number {
+            color: red;
+        }
+        .black-number {
+            color: black;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Тестирование</h1>
+
+<div class="test-container">
+    <h2>Тест №1: Последовательный поиск чисел</h2>
+    <p>Задача: Найдите все черные числа в таблице по возрастанию (от 1 до 25), затем найдите все красные числа по убыванию (от 24 до 1). Внесите буквы, соответствующие числам, в таблицу ниже.</p>
+    <table id="taskTable1"></table>
+
+    <h2>Ответы</h2>
+    <table id="answersTable1">
+        <tr>
+            <th>Число</th>
+            <th>Буква</th>
+        </tr>
+        <!-- Поля для ввода пользователем будут генерироваться автоматически -->
+    </table>
+
+    <div id="timer">Секундомер: 0:00</div>
+    <button class="button" id="startTest1">Начать тест 1</button>
+    <button class="button red" id="checkTest1">Проверить тест 1</button>
+</div>
+
+<div class="test-container">
+    <h2>Тест №2: Чередование черных и красных чисел</h2>
+    <p>Задача: Сначала найдите черное число 1, затем красное число 24, после черное число 2, затем красное 23 и так далее. Записывайте соответствующие буквы в два столбца: для черных чисел в один столбец, для красных — в другой. Таймер останавливается после каждых 10 букв (5 черных и 5 красных).</p>
+    <table id="taskTable2"></table>
+
+    <h2>Ответы</h2>
+    <table id="answersTable2">
+        <tr>
+            <th>Число (черное)</th>
+            <th>Число (красное)</th>
+        </tr>
+        <!-- Поля для ввода пользователем будут генерироваться автоматически -->
+    </table>
+
+    <div id="timer2">Секундомер: 0:00</div>
+    <button class="button" id="startTest2">Начать тест 2</button>
+    <button class="button red" id="checkTest2">Проверить тест 2</button>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const timerDisplay1 = document.getElementById('timer');
+    const timerDisplay2 = document.getElementById('timer2');
+    let timer1, seconds1 = 0;
+    let timer2, seconds2 = 0;
+    let correctAnswersTest1 = {};
+    let correctAnswersTest2 = {};
+
+    // Функция для генерации таблицы с черными и красными числами
+    function generateColoredTable(elementId, answersTableId, test) {
+        const table = document.getElementById(elementId);
+        const answersTable = document.getElementById(answersTableId);
+        table.innerHTML = ''; // Очищаем таблицу
+        answersTable.innerHTML = '<tr><th>Число</th><th>Буква</th></tr>'; // Очищаем таблицу ответов
+
+        const numbers = shuffle([...Array(25).keys()].map(x => x + 1));
+        const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
+
+        let correctAnswers = {};  // Хранение правильных ответов
+
+        for (let i = 0; i < 5; i++) {
+            const row = document.createElement('tr');
+            for (let j = 0; j < 5; j++) {
+                const num = numbers.pop();
+                const letter = letters[Math.floor(Math.random() * letters.length)];
+                const cell = document.createElement('td');
+                const colorClass = num % 2 === 0 ? 'red-number' : 'black-number';
+                cell.innerHTML = `<span class="${colorClass}">${num}-${letter}</span>`;
+                row.appendChild(cell);
+
+                // Записываем правильные ответы в соответствующем формате
+                correctAnswers[num] = letter;
+
+                // Генерируем поля для ввода ответов
+                const answerRow = document.createElement('tr');
+                answerRow.innerHTML = `<td>${num}</td><td><input type="text" id="input_${test}_${num}" data-number="${num}"></td>`;
+                answersTable.appendChild(answerRow);
+            }
+            table.appendChild(row);
+        }
+
+        if (test === 1) {
+            correctAnswersTest1 = correctAnswers;
+        } else {
+            correctAnswersTest2 = correctAnswers;
+        }
+    }
+
+    // Функция для перемешивания массива
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // Таймер для теста 1
+    function startTimer1() {
+        clearInterval(timer1);
+        seconds1 = 0;
+        timer1 = setInterval(() => {
+            seconds1++;
+            timerDisplay1.textContent = `Секундомер: ${Math.floor(seconds1 / 60)}:${seconds1 % 60 < 10 ? '0' : ''}${seconds1 % 60}`;
+        }, 1000);
+    }
+
+    function endTimer1() {
+        clearInterval(timer1);
+    }
+
+    // Таймер для теста 2
+    function startTimer2() {
+        clearInterval(timer2);
+        seconds2 = 0;
+        timer2 = setInterval(() => {
+            seconds2++;
+            timerDisplay2.textContent = `Секундомер: ${Math.floor(seconds2 / 60)}:${seconds2 % 60 < 10 ? '0' : ''}${seconds2 % 60}`;
+        }, 1000);
+    }
+
+    function endTimer2() {
+        clearInterval(timer2);
+    }
+
+    // Проверка теста 1
+    function checkTest1() {
+        let correct = 0;
+        for (let num = 1; num <= 25; num++) {
+            const input = document.getElementById(`input_1_${num}`);
+            const letter = input.value.trim().toLowerCase();
+            if (letter === correctAnswersTest1[num]) {
+                input.classList.add('correct');
+                correct++;
+            } else {
+                input.classList.add('incorrect');
+            }
+        }
+        alert(`Результат: ${correct}/25 правильных ответов.`);
+    }
+
+    // Проверка теста 2
+    function checkTest2() {
+        let correct = 0;
+        for (let num = 1; num <= 25; num++) {
+            const input = document.getElementById(`input_2_${num}`);
+            const letter = input.value.trim().toLowerCase();
+            if (letter === correctAnswersTest2[num]) {
+                input.classList.add('correct');
+                correct++;
+            } else {
+                input.classList.add('incorrect');
+            }
+        }
+        alert(`Результат: ${correct}/25 правильных ответов.`);
+    }
+
+    // Начать и завершить тест 1
+    document.getElementById('startTest1').addEventListener('click', () => {
+        generateColoredTable('taskTable1', 'answersTable1', 1);
+        startTimer1();
+    });
+    document.getElementById('checkTest1').addEventListener('click', checkTest1);
+
+    // Начать и завершить тест 2
+    document.getElementById('startTest2').addEventListener('click', () => {
+        generateColoredTable('taskTable2', 'answersTable2', 2);
+        startTimer2();
+    });
+    document.getElementById('checkTest2').addEventListener('click', checkTest2);
+});
+</script>
+
+</body>
+</html>
