@@ -108,7 +108,6 @@
             <th>Число</th>
             <th>Буква</th>
         </tr>
-        <!-- Поля для ввода пользователем будут генерироваться автоматически -->
     </table>
 
     <div id="timer">Секундомер: 0:00</div>
@@ -127,7 +126,6 @@
             <th>Число (черное)</th>
             <th>Число (красное)</th>
         </tr>
-        <!-- Поля для ввода пользователем будут генерироваться автоматически -->
     </table>
 
     <div id="timer2">Секундомер: 0:00</div>
@@ -144,17 +142,16 @@ document.addEventListener("DOMContentLoaded", function() {
     let correctAnswersTest1 = {};
     let correctAnswersTest2 = {};
 
-    // Функция для генерации таблицы с черными и красными числами
     function generateColoredTable(elementId, answersTableId, test) {
         const table = document.getElementById(elementId);
         const answersTable = document.getElementById(answersTableId);
-        table.innerHTML = ''; // Очищаем таблицу
-        answersTable.innerHTML = '<tr><th>Число</th><th>Буква</th></tr>'; // Очищаем таблицу ответов
+        table.innerHTML = ''; 
+        answersTable.innerHTML = '<tr><th>Число</th><th>Буква</th></tr>'; 
 
         const numbers = shuffle([...Array(25).keys()].map(x => x + 1));
         const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
 
-        let correctAnswers = {};  // Хранение правильных ответов
+        let correctAnswers = {};  
 
         for (let i = 0; i < 5; i++) {
             const row = document.createElement('tr');
@@ -166,10 +163,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 cell.innerHTML = `<span class="${colorClass}">${num}-${letter}</span>`;
                 row.appendChild(cell);
 
-                // Записываем правильные ответы в соответствующем формате
+
                 correctAnswers[num] = letter;
 
-                // Генерируем поля для ввода ответов
+
                 const answerRow = document.createElement('tr');
                 answerRow.innerHTML = `<td>${num}</td><td><input type="text" id="input_${test}_${num}" data-number="${num}"></td>`;
                 answersTable.appendChild(answerRow);
