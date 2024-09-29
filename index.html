@@ -14,19 +14,23 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
+            margin: 0;
         }
         h1, h2 {
             color: #333;
             font-weight: 700;
             margin-bottom: 20px;
+            text-align: center;
         }
         .test-container {
             background-color: white;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             padding: 30px;
             border-radius: 15px;
-            width: 650px;
+            width: 100%;
+            max-width: 650px;
             margin-bottom: 30px;
+            overflow: hidden;
         }
         table {
             border-collapse: collapse;
@@ -59,6 +63,7 @@
             font-size: 16px;
             margin-top: 20px;
             transition: background-color 0.3s;
+            width: 100%;
         }
         .button:hover {
             background-color: #45a049;
@@ -69,7 +74,7 @@
         .button.red:hover {
             background-color: #e53935;
         }
-        #timer, #timer2 {
+        #timerBlack, #timerRed {
             font-size: 18px;
             color: #555;
             margin-bottom: 20px;
@@ -93,176 +98,215 @@
             background-color: #f8d7da;
             color: #721c24;
         }
+        @media (max-width: 768px) {
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+            .test-container {
+                padding: 20px;
+            }
+            input[type="text"] {
+                width: 100%;
+            }
+            .button {
+                padding: 10px;
+            }
+        }
+        @media (max-width: 480px) {
+            h1, h2 {
+                font-size: 1.25rem;
+            }
+            .button {
+                font-size: 14px;
+            }
+        }
     </style>
 </head>
 <body>
 
 <div class="test-container">
     <h2>Тест №1: Последовательный поиск чисел</h2>
-    <p>Задача: Найдите все черные числа в таблице по возрастанию (от 1 до 25), затем найдите все красные числа по убыванию (от 24 до 1). Внесите буквы, соответствующие числам, в таблицу ниже.</p>
+    <p>Задача: Ваша задача будет состоять в том, чтобы отыскать сначала все черные числа в возрастающей последовательности (от 1 до 25), а затем все красные числа в убывающей последовательности (от 24 до 1). Каждый раз, находя необходимое число, Вам необходимо СРАЗУ записывать букву, указанную после числа в таблице в таблицу ниже. Если ошиблись, ошибки не исправляйте. Старайтесь работать как можно быстрее и в то же время не делать ошибок.</p>
     <table id="taskTable1"></table>
-
-    <h2>Ответы</h2>
     <table id="answersTable1">
         <tr>
-            <th>Число</th>
+            <th>Черное число</th>
+            <th>Буква</th>
+            <th>Красное число</th>
             <th>Буква</th>
         </tr>
+        <!-- Поля для ответов будут сгенерированы здесь -->
     </table>
 
-    <div id="timer">Секундомер: 0:00</div>
-    <button class="button" id="startTest1">Начать тест 1</button>
-    <button class="button red" id="checkTest1">Проверить тест 1</button>
-</div>
-
-<div class="test-container">
-    <h2>Тест №2: Чередование черных и красных чисел</h2>
-    <p>Задача: Сначала найдите черное число 1, затем красное число 24, после черное число 2, затем красное 23 и так далее. Записывайте соответствующие буквы в два столбца: для черных чисел в один столбец, для красных — в другой. Таймер останавливается после каждых 10 букв (5 черных и 5 красных).</p>
-    <table id="taskTable2"></table>
-
-    <h2>Ответы</h2>
-    <table id="answersTable2">
-        <tr>
-            <th>Число (черное)</th>
-            <th>Число (красное)</th>
-        </tr>
-    </table>
-
-    <div id="timer2">Секундомер: 0:00</div>
-    <button class="button" id="startTest2">Начать тест 2</button>
-    <button class="button red" id="checkTest2">Проверить тест 2</button>
+    <div id="timerBlack">Секундомер для черных: 0:00</div>
+    <button class="button" id="startTest1">Начать тест (черные)</button>
+    <button class="button red" id="checkBlackTest1">Проверить черные ответы</button>
+    
+    <div id="timerRed">Секундомер для красных: 0:00</div>
+    <button class="button" id="startRedTest1" disabled>Начать тест (красные)</button>
+    <button class="button red" id="checkRedTest1" disabled>Проверить красные ответы</button>
 </div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    const timerDisplay1 = document.getElementById('timer');
-    const timerDisplay2 = document.getElementById('timer2');
-    let timer1, seconds1 = 0;
-    let timer2, seconds2 = 0;
+    const timerDisplayBlack = document.getElementById('timerBlack');
+    const timerDisplayRed = document.getElementById('timerRed');
+    let timerBlack, timerRed;
+    let secondsBlack = 0, secondsRed = 0;
     let correctAnswersTest1 = {};
-    let correctAnswersTest2 = {};
 
-    function generateColoredTable(elementId, answersTableId, test) {
-        const table = document.getElementById(elementId);
-        const answersTable = document.getElementById(answersTableId);
-        table.innerHTML = ''; 
-        answersTable.innerHTML = '<tr><th>Число</th><th>Буква</th></tr>'; 
-
-        const numbers = shuffle([...Array(25).keys()].map(x => x + 1));
-        const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
-
-        let correctAnswers = {};  
-
-        for (let i = 0; i < 5; i++) {
-            const row = document.createElement('tr');
-            for (let j = 0; j < 5; j++) {
-                const num = numbers.pop();
-                const letter = letters[Math.floor(Math.random() * letters.length)];
-                const cell = document.createElement('td');
-                const colorClass = num % 2 === 0 ? 'red-number' : 'black-number';
-                cell.innerHTML = `<span class="${colorClass}">${num}-${letter}</span>`;
-                row.appendChild(cell);
-
-
-                correctAnswers[num] = letter;
-
-
-                const answerRow = document.createElement('tr');
-                answerRow.innerHTML = `<td>${num}</td><td><input type="text" id="input_${test}_${num}" data-number="${num}"></td>`;
-                answersTable.appendChild(answerRow);
-            }
-            table.appendChild(row);
-        }
-
-        if (test === 1) {
-            correctAnswersTest1 = correctAnswers;
-        } else {
-            correctAnswersTest2 = correctAnswers;
-        }
-    }
-
-    // Функция для перемешивания массива
-    function shuffle(array) {
+    function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [array[i], array[j]] = [array[j], array[i]];
         }
-        return array;
     }
 
-    // Таймер для теста 1
-    function startTimer1() {
-        clearInterval(timer1);
-        seconds1 = 0;
-        timer1 = setInterval(() => {
-            seconds1++;
-            timerDisplay1.textContent = `Секундомер: ${Math.floor(seconds1 / 60)}:${seconds1 % 60 < 10 ? '0' : ''}${seconds1 % 60}`;
+    function generateTableForTest1() {
+        const table = document.getElementById('taskTable1');
+        const answersTable = document.getElementById('answersTable1');
+        table.innerHTML = ''; 
+        answersTable.innerHTML = `
+            <tr>
+                <th>Черное число</th>
+                <th>Буква</th>
+                <th>Красное число</th>
+                <th>Буква</th>
+            </tr>
+        `;
+
+        const blackNumbers = Array.from({ length: 25 }, (_, i) => i + 1);
+        const redNumbers = Array.from({ length: 24 }, (_, i) => 24 - i);
+        const letters = 'абвгдеёжзийклмнопрстуфхцчшщъыьэюя'.split('');
+
+        let combinedNumbers = [];
+
+        // Чередуем черные и красные числа
+        while (blackNumbers.length || redNumbers.length) {
+            if (blackNumbers.length) combinedNumbers.push({ number: blackNumbers.shift(), color: 'black' });
+            if (redNumbers.length) combinedNumbers.push({ number: redNumbers.shift(), color: 'red' });
+        }
+
+        // Перемешиваем массив
+        shuffleArray(combinedNumbers);
+
+        let correctAnswers = {};  
+
+        // Генерация таблицы с заданиями
+        for (let i = 0; i < 7; i++) {
+            const row = document.createElement('tr');
+            for (let j = 0; j < 7; j++) {
+                const cell = document.createElement('td');
+                const item = combinedNumbers.shift();
+
+                if (item) {
+                    const letter = letters[Math.floor(Math.random() * letters.length)];
+                    if (item.color === 'black') {
+                        cell.innerHTML = `<span class="black-number">${item.number}-${letter}</span>`;
+                        correctAnswers[item.number] = letter;
+                    } else {
+                        cell.innerHTML = `<span class="red-number">${item.number}-${letter}</span>`;
+                        correctAnswers[item.number] = letter;
+                    }
+                }
+
+                row.appendChild(cell);
+            }
+            table.appendChild(row);
+        }
+
+        // Генерация полей для ответов
+        for (let k = 0; k < 25; k++) {
+            const blackNumber = k + 1;
+            const redNumber = 24 - k;
+
+            const answerRow = document.createElement('tr');
+            answerRow.innerHTML = `
+                <td>${blackNumber}</td>
+                <td><input type="text" id="input_black_${blackNumber}"></td>
+                <td>${redNumber}</td>
+                <td><input type="text" id="input_red_${redNumber}" disabled></td>
+            `;
+            answersTable.appendChild(answerRow);
+        }
+
+        correctAnswersTest1 = correctAnswers;
+    }
+
+    function startTimerBlack() {
+        secondsBlack = 0;
+        timerBlack = setInterval(function() {
+            secondsBlack++;
+            const minutes = Math.floor(secondsBlack / 60);
+            const seconds = secondsBlack % 60;
+            timerDisplayBlack.textContent = `Секундомер для черных: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         }, 1000);
     }
 
-    function endTimer1() {
-        clearInterval(timer1);
-    }
-
-    // Таймер для теста 2
-    function startTimer2() {
-        clearInterval(timer2);
-        seconds2 = 0;
-        timer2 = setInterval(() => {
-            seconds2++;
-            timerDisplay2.textContent = `Секундомер: ${Math.floor(seconds2 / 60)}:${seconds2 % 60 < 10 ? '0' : ''}${seconds2 % 60}`;
+    function startTimerRed() {
+        secondsRed = 0;
+        timerRed = setInterval(function() {
+            secondsRed++;
+            const minutes = Math.floor(secondsRed / 60);
+            const seconds = secondsRed % 60;
+            timerDisplayRed.textContent = `Секундомер для красных: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
         }, 1000);
     }
 
-    function endTimer2() {
-        clearInterval(timer2);
-    }
+    function checkBlackTest1() {
+        clearInterval(timerBlack); 
+        let correctCount = 0;
 
-    // Проверка теста 1
-    function checkTest1() {
-        let correct = 0;
-        for (let num = 1; num <= 25; num++) {
-            const input = document.getElementById(`input_1_${num}`);
-            const letter = input.value.trim().toLowerCase();
-            if (letter === correctAnswersTest1[num]) {
-                input.classList.add('correct');
-                correct++;
+        for (let i = 1; i <= 25; i++) {
+            const userAnswer = document.getElementById(`input_black_${i}`).value.toLowerCase();
+            const correctAnswer = correctAnswersTest1[i].toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById(`input_black_${i}`).classList.add('correct');
+                correctCount++;
             } else {
-                input.classList.add('incorrect');
+                document.getElementById(`input_black_${i}`).classList.add('incorrect');
             }
         }
-        alert(`Результат: ${correct}/25 правильных ответов.`);
+
+        alert(`Тест на черные числа завершен! Правильных ответов: ${correctCount} из 25.`);
+        document.getElementById('startRedTest1').disabled = false;
     }
 
-    // Проверка теста 2
-    function checkTest2() {
-        let correct = 0;
-        for (let num = 1; num <= 25; num++) {
-            const input = document.getElementById(`input_2_${num}`);
-            const letter = input.value.trim().toLowerCase();
-            if (letter === correctAnswersTest2[num]) {
-                input.classList.add('correct');
-                correct++;
+    function checkRedTest1() {
+        clearInterval(timerRed);  
+        let correctCount = 0;
+
+        for (let i = 1; i <= 24; i++) {
+            const userAnswer = document.getElementById(`input_red_${i}`).value.toLowerCase();
+            const correctAnswer = correctAnswersTest1[i].toLowerCase();
+
+            if (userAnswer === correctAnswer) {
+                document.getElementById(`input_red_${i}`).classList.add('correct');
+                correctCount++;
             } else {
-                input.classList.add('incorrect');
+                document.getElementById(`input_red_${i}`).classList.add('incorrect');
             }
         }
-        alert(`Результат: ${correct}/25 правильных ответов.`);
+
+        alert(`Тест на красные числа завершен! Правильных ответов: ${correctCount} из 24.`);
     }
 
-    // Начать и завершить тест 1
-    document.getElementById('startTest1').addEventListener('click', () => {
-        generateColoredTable('taskTable1', 'answersTable1', 1);
-        startTimer1();
+    document.getElementById('startTest1').addEventListener('click', function() {
+        generateTableForTest1();
+        startTimerBlack();
+        document.getElementById('checkBlackTest1').disabled = false;
     });
-    document.getElementById('checkTest1').addEventListener('click', checkTest1);
 
-    // Начать и завершить тест 2
-    document.getElementById('startTest2').addEventListener('click', () => {
-        generateColoredTable('taskTable2', 'answersTable2', 2);
-        startTimer2();
+    document.getElementById('checkBlackTest1').addEventListener('click', checkBlackTest1);
+    document.getElementById('startRedTest1').addEventListener('click', function() {
+        startTimerRed();
+        for (let i = 1; i <= 24; i++) {
+            document.getElementById(`input_red_${i}`).disabled = false;
+        }
+        document.getElementById('checkRedTest1').disabled = false;
     });
-    document.getElementById('checkTest2').addEventListener('click', checkTest2);
+    document.getElementById('checkRedTest1').addEventListener('click', checkRedTest1);
 });
 </script>
 
