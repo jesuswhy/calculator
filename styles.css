@@ -1,0 +1,335 @@
+/* Общие настройки */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Стиль заголовков */
+header {
+    background: linear-gradient(to right, #0070f3, #0070f3);
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 10px;
+}
+
+/* Основной блок */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* Стиль формы */
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 40px;
+}
+
+form label {
+    margin: 10px 0 5px;
+    font-weight: 500;
+    color: #333;
+}
+
+form input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: border 0.3s;
+}
+
+form input:focus {
+    border-color: #0070f3;
+    outline: none;
+}
+
+/* Кнопка */
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #0070f3;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Информационный блок */
+#info {
+    max-width: 600px;
+    text-align: center;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#info h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+#info p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Стиль для страниц с тестом */
+#test img {
+    max-width: 50%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#test form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+#test form input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: border 0.3s;
+}
+
+#test form input:focus {
+    border-color: #00acc1;
+    outline: none;
+}
+
+#test form button {
+    background-color: #00bfa5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 12px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+#test form button:hover {
+    background-color: #0070f3;
+    transform: translateY(-2px);
+}
+
+#test form button:active {
+    transform: translateY(0);
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    header p {
+        font-size: 1rem;
+    }
+
+    form, #info {
+        width: 90%;
+    }
+
+    #test form {
+        width: 90%;
+    }
+}
+
+/* Стиль для блока таймера */
+#timer-container {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+#timer {
+    font-weight: bold;
+    color: #0070f3;
+}
+
+/* Таблица для ввода ответов */
+/* Уменьшаем таблицу */
+#answersTable {
+    width: 100%; /* Таблица адаптируется к своему контейнеру */
+    max-width: 400px; /* Ограничение ширины таблицы */
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#answersTable th, #answersTable td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+#answersTable th {
+    background-color: #00bfa5;
+    color: white;
+    font-weight: 600;
+}
+
+#answersTable input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* Таймер и время на завершение */
+.time-inputs {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.time-inputs label, .time-inputs input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.time-inputs input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #333;
+    text-align: center;
+    pointer-events: none;
+}
+
+/* Кнопки управления */
+#control-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+#control-buttons button {
+    margin: 0 10px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#control-buttons #startButton {
+    background-color: #0070f3;
+    color: white;
+}
+
+#control-buttons #finishButton {
+    background-color: #f44336;
+    color: white;
+}
+
+#control-buttons button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+#control-buttons #startButton:hover {
+    background-color: #0070f3;
+}
+
+#control-buttons #finishButton:hover {
+    background-color: #d32f2f;
+}
+
+.footer {
+    background-color: #0070f3;
+    color: #fff;
+    padding: 40px 20px 20px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 200px;
+}
+
+.footer-section2 {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* Стили для контейнера с изображением */
+.image-container {
+    text-align: center; /* Центрирование изображения */
+    margin: 2px 0;
+}
+
+.image-container img {
+    max-width: 1100px; /* Ограничение ширины изображения */
+    height: auto; /* Поддержка пропорций изображения */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.flex-container {
+    display: flex;
+    justify-content: space-between; /* Распределение элементов по горизонтали */
+    align-items: flex-start; /* Таблица и изображение выравниваются по верху */
+    gap: 20px; /* Расстояние между изображением и таблицей */
+    margin: 20px 0;
+}
