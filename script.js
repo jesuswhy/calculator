@@ -93,76 +93,61 @@ function fetchCNYRate() {
     fetchCNYRate();
   };
 
-  async function calculatePrice() {
-    const usdRateElement = document.getElementById('usdRate');
-    const usdRate = parseFloat(usdRateElement.textContent) || 0; // Получаем курс доллара
-    if (usdRate === 0) return; // Проверка на случай ошибки
+// Функция для расчета цены продажи масла
+function calculatePrice() {
+    const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
+    const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
+    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
+    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
+    const customDuty = parseFloat(document.getElementById('customDuty').value);
+    const advance = parseFloat(document.getElementById('advance').value) / 100;
+    const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
+    const markup = parseFloat(document.getElementById('markup').value);
+    const survey = 600;
 
-    // Получаем курс юаня
-    const cnyRateElement = document.getElementById('cnyRate');
-    const cnyRate = parseFloat(cnyRateElement.textContent) || 0; // Корректно извлекаем курс юаня
-    if (cnyRate === 0) {
-        console.error('Курс юаня равен 0, деление невозможно!');
-        return;
-    }
-
-    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
-    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value) || 0;
-    const advance = parseFloat(document.getElementById('advance').value) / 100 || 0;
-    const moneyTerm = parseInt(document.getElementById('moneyTerm').value) || 0;
-    const customDuty = parseFloat(document.getElementById('customDuty').value) || 0;
-    const markup = parseFloat(document.getElementById('markup').value) || 0;
-
-    // Переводим стоимость логистики из долларов в рубли
+    // Переводим логистику в рубли
     const logisticsCostRUB = logisticsCostUSD * usdRate;
+    console.log('Логистика в рублях: ' + logisticsCostRUB);
 
-    // Общая стоимость закупки с логистикой и пошлиной
-    const totalCost = purchasePrice + logisticsCostRUB + customDuty;
+    // Общая стоимость
+    const totalCost = purchasePrice + logisticsCostRUB;
+    console.log('Общая стоимость: ' + totalCost);
+    
+    // Учет аванса и процента за срок
+    const interestRate = 0.0003896103896; // Процентная ставка за день
+    const interestCost = totalCost * interestRate * moneyTerm;
+    console.log('Процент за срок: ' + interestCost);
 
-    // Дополнительный расчет на основе аванса и срока возврата денег
-    const interestRate = 0.05; // Процентная ставка за день (примерная)
-    const advanceCost = totalCost * (1 - advance); // Учитываем аванс
-    const interestCost = advanceCost * interestRate * moneyTerm;
+    // Возврат НДС
+    const VATRefund = purchasePrice - purchasePrice / 1.1;
+    console.log('Возврат НДС: ' + VATRefund);
 
-    // Итоговая цена продажи с учетом наценки, аванса и процентов за срок возврата
-    const salePrice = (totalCost + (totalCost * markup / 100) + interestCost) / cnyRate;
+    // Итоговая цена продажи
+    const salePrice = ((totalCost + interestCost + survey) - VATRefund);
+    console.log('Итоговая цена продажи: ' + salePrice);
 
-    // Отображаем результат
-    document.getElementById('result').textContent = salePrice.toFixed(2);
+    // Конвертация в юани
+    const salePriceCNY = salePrice / cnyRate;
+    console.log('Цена продажи в юанях: ' + salePriceCNY);
+
+    document.getElementById('result').textContent = salePriceCNY.toFixed(2);
 }
 
-// Вызываем функцию при необходимости
-calculatePrice();
-
-
+// Функция для расчета цены закупки масла
 function calculatePurchasePrice() {
-    const marketPrice = parseFloat(document.getElementById('marketPrice').value) || 0; // Ценабиржевая
-    const usdRate = parseFloat(document.getElementById('usdRatePurchase').textContent) || 0; // Курс доллара
-    const logisticsCost = parseFloat(document.getElementById('logisticsCost').value) || 0; // Ставка перевозка
-    const surveyorCost = parseFloat(document.getElementById('surveyorCost').value) || 0; // Расходы на сюрвейера
-    const marginality = parseFloat(document.getElementById('marginality').value) || 0; // МаржаСС
-    const creditCost = parseFloat(document.getElementById('creditCost').value) || 0; // Стоимость денег
-    const returnVAT = parseFloat(document.getElementById('returnVAT').value) || 0; // НДС
+    const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
+    const marketPrice = parseFloat(document.getElementById('marketPrice').value);
+    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
+    const customDuty = parseFloat(document.getElementById('customDuty').value);
+    const advance = parseFloat(document.getElementById('advance').value) / 100;
+    const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
+    const markup = parseFloat(document.getElementById('markup').value);
 
-    // Расчет пошлины
-    let exportDutyRate = 0; // Временная переменная для пошлины
-    if (usdRate < 80) {
-        exportDutyRate = 0;
-    } else if (usdRate < 85) {
-        exportDutyRate = 4;
-    } else if (usdRate < 90) {
-        exportDutyRate = 4.5;
-    } else if (usdRate < 95) {
-        exportDutyRate = 5.5;
-    } else if (usdRate < 100) {
-        exportDutyRate = 7;
-    }
+    // Логистика в рублях
+    const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    const exportDuty = (marketPrice - logisticsCost - surveyorCost) * (exportDutyRate / 100); // Прогнозная экспортная пошлина
+    // Цена закупки по формуле
+    const purchasePrice = (marketPrice - logisticsCostRUB - 2 /* сюрвейер */) * usdRate - customDuty - (marketPrice * 0.02) /* МаржаСС */ - (marketPrice * 0.023 * moneyTerm / 30) /* Стоимость денег */ + (marketPrice * 0.09) /* НДС */;
 
-    // Расчет цены закупки по новой формуле
-    const purchasePrice = (marketPrice - logisticsCost - surveyorCost) * usdRate - exportDuty - (marginality / 100) * (marketPrice - logisticsCost - surveyorCost) - (creditCost / 100) * (marketPrice - logisticsCost - surveyorCost) + (returnVAT / 100) * (marketPrice - logisticsCost - surveyorCost);
-
-    // Отображаем результат
-    document.getElementById('purchasePriceResult').textContent = `${purchasePrice.toFixed(2)}`;
+    document.getElementById('purchasePriceResult').textContent = purchasePrice.toFixed(2);
 }
