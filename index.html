@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Калькулятор цены масла</title>
-  <link rel="stylesheet" href="styles.css">
-  <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/128/891/891175.png">
-</head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/128/891/891175.png">
+  </head>
+
 <body>
+
   <div class="currency-block">
     <p>Курс USD: <span id="usdRate">Загрузка...</span> руб.</p>
     <p>Курс CNY: <span id="cnyRate">Загрузка...</span> руб.</p>
@@ -19,10 +20,10 @@
     
     <form id="calcForm">
       <label for="purchasePrice">Цена закупки (в рублях):</label>
-      <input type="number" id="purchasePrice" value="82800" name="purchasePrice" required>
+      <input type="number" id="purchasePrice" name="purchasePrice" required>
 
       <label for="logisticsCostUSD">Стоимость логистики (в долларах):</label>
-      <input type="number" id="logisticsCostUSD" value="153" name="logisticsCostUSD" required>
+      <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" required>
 
       <label for="customDuty">Пошлина (%):</label>
       <input type="number" id="customDuty" value="0" name="customDuty" required>
@@ -54,7 +55,7 @@
     <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" required>
 
     <label for="customDuty">Пошлина (%):</label>
-    <input type="number" id="customDuty" name="customDuty" required>
+    <input type="number" id="customDuty" value="0" name="customDuty" required>
 
     <label for="advance">Размер аванса покупателя (%):</label>
     <input type="number" id="advance" value="3" name="advance" required>
