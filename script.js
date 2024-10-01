@@ -133,3 +133,36 @@ function fetchCNYRate() {
 
 // Вызываем функцию при необходимости
 calculatePrice();
+
+
+function calculatePurchasePrice() {
+    const marketPrice = parseFloat(document.getElementById('marketPrice').value) || 0; // Ценабиржевая
+    const usdRate = parseFloat(document.getElementById('usdRatePurchase').textContent) || 0; // Курс доллара
+    const logisticsCost = parseFloat(document.getElementById('logisticsCost').value) || 0; // Ставка перевозка
+    const surveyorCost = parseFloat(document.getElementById('surveyorCost').value) || 0; // Расходы на сюрвейера
+    const marginality = parseFloat(document.getElementById('marginality').value) || 0; // МаржаСС
+    const creditCost = parseFloat(document.getElementById('creditCost').value) || 0; // Стоимость денег
+    const returnVAT = parseFloat(document.getElementById('returnVAT').value) || 0; // НДС
+
+    // Расчет пошлины
+    let exportDutyRate = 0; // Временная переменная для пошлины
+    if (usdRate < 80) {
+        exportDutyRate = 0;
+    } else if (usdRate < 85) {
+        exportDutyRate = 4;
+    } else if (usdRate < 90) {
+        exportDutyRate = 4.5;
+    } else if (usdRate < 95) {
+        exportDutyRate = 5.5;
+    } else if (usdRate < 100) {
+        exportDutyRate = 7;
+    }
+
+    const exportDuty = (marketPrice - logisticsCost - surveyorCost) * (exportDutyRate / 100); // Прогнозная экспортная пошлина
+
+    // Расчет цены закупки по новой формуле
+    const purchasePrice = (marketPrice - logisticsCost - surveyorCost) * usdRate - exportDuty - (marginality / 100) * (marketPrice - logisticsCost - surveyorCost) - (creditCost / 100) * (marketPrice - logisticsCost - surveyorCost) + (returnVAT / 100) * (marketPrice - logisticsCost - surveyorCost);
+
+    // Отображаем результат
+    document.getElementById('purchasePriceResult').textContent = `${purchasePrice.toFixed(2)}`;
+}
