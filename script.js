@@ -34,7 +34,7 @@ async function fetchUSDRate() {
             // Выводим курс доллара в элементе на странице
             const usdRateElement = document.getElementById('usdRate');
             if (usdRateElement) {
-                usdRateElement.textContent = `${formattedUSDRate} ₽`; // Устанавливаем курс доллара в элемент
+                usdRateElement.textContent = `${formattedUSDRate}`; // Устанавливаем курс доллара в элемент
             }
             console.log('Курс доллара: ' + formattedUSDRate);
         } else {
@@ -68,7 +68,7 @@ function fetchCNYRate() {
                     const cnyRate = cnyData.LAST; // Извлекаем LAST цену
                     const cnyRateElement = document.getElementById('cnyRate');
                     if (cnyRateElement) {
-                        cnyRateElement.textContent = `${cnyRate} ₽`; // Устанавливаем курс юаня в элемент
+                        cnyRateElement.textContent = `${cnyRate}`; // Устанавливаем курс юаня в элемент
                     }
                     console.log('Курс юаня: ' + cnyRate);
                 } else {
