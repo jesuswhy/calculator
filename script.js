@@ -93,18 +93,25 @@ function fetchCNYRate() {
     fetchCNYRate();
   };
 
-  // Функция для расчета цены продажи
   async function calculatePrice() {
     const usdRateElement = document.getElementById('usdRate');
     const usdRate = parseFloat(usdRateElement.textContent) || 0; // Получаем курс доллара
     if (usdRate === 0) return; // Проверка на случай ошибки
 
-    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
-    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const advance = parseFloat(document.getElementById('advance').value) / 100;
-    const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
-    const customDuty = parseFloat(document.getElementById('customDuty').value);
-    const markup = parseFloat(document.getElementById('markup').value);
+    // Получаем курс юаня
+    const cnyRateElement = document.getElementById('cnyRate');
+    const cnyRate = parseFloat(cnyRateElement.textContent) || 0; // Корректно извлекаем курс юаня
+    if (cnyRate === 0) {
+        console.error('Курс юаня равен 0, деление невозможно!');
+        return;
+    }
+
+    const purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
+    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value) || 0;
+    const advance = parseFloat(document.getElementById('advance').value) / 100 || 0;
+    const moneyTerm = parseInt(document.getElementById('moneyTerm').value) || 0;
+    const customDuty = parseFloat(document.getElementById('customDuty').value) || 0;
+    const markup = parseFloat(document.getElementById('markup').value) || 0;
 
     // Переводим стоимость логистики из долларов в рубли
     const logisticsCostRUB = logisticsCostUSD * usdRate;
@@ -118,8 +125,11 @@ function fetchCNYRate() {
     const interestCost = advanceCost * interestRate * moneyTerm;
 
     // Итоговая цена продажи с учетом наценки, аванса и процентов за срок возврата
-    const salePrice = totalCost + (totalCost * markup / 100) + interestCost;
+    const salePrice = (totalCost + (totalCost * markup / 100) + interestCost) / cnyRate;
 
     // Отображаем результат
     document.getElementById('result').textContent = salePrice.toFixed(2);
-  }
+}
+
+// Вызываем функцию при необходимости
+calculatePrice();
