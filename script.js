@@ -1,7 +1,7 @@
 // Функция для получения курса USD с сайта ЦБ РФ
 async function fetchUSDRate() {
     try {
-      const url = 'https://www.cbr.ru/scripts/XML_daily.asp';
+      const url = 'https://cors-anywhere.herokuapp.com/https://www.cbr.ru/scripts/XML_daily.asp';
       const response = await fetch(url);
       if (!response.ok) throw new Error('Сеть не отвечает');
   
