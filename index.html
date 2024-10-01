@@ -19,19 +19,19 @@
     
     <form id="calcForm">
       <label for="purchasePrice">Цена закупки (в рублях):</label>
-      <input type="number" id="purchasePrice" name="purchasePrice" required>
+      <input type="number" id="purchasePrice" value="82800" name="purchasePrice" required>
 
       <label for="logisticsCostUSD">Стоимость логистики (в долларах):</label>
-      <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" required>
+      <input type="number" id="logisticsCostUSD" value="153" name="logisticsCostUSD" required>
+
+      <label for="customDuty">Пошлина (%):</label>
+      <input type="number" id="customDuty" value="0" name="customDuty" required>
 
       <label for="advance">Размер аванса покупателя (%):</label>
-      <input type="number" id="advance" value="100" name="advance" required>
+      <input type="number" id="advance" value="3" name="advance" required>
 
       <label for="moneyTerm">Срок денег (в днях):</label>
       <input type="number" id="moneyTerm" value="120" name="moneyTerm" required>
-
-      <label for="customDuty">Пошлина (%):</label>
-      <input type="number" id="customDuty" name="customDuty" required>
 
       <label for="markup">Маржа (%):</label>
       <input type="number" id="markup" value="2.5" name="markup" required>
@@ -39,7 +39,6 @@
       <button type="button" onclick="calculatePrice()">Рассчитать</button>
     </form>
 
-    <h2>Результат</h2>
     <p>Цена продажи: <span id="result"></span> CNY</p>
   </div>
 
@@ -51,31 +50,24 @@
       <label for="marketPrice">Цена продажи (в CNY):</label>
     <input type="number" id="marketPrice" required>
 
-    <label for="usdRatePurchase">Курс доллара:</label>
-    <input type="number" id="usdRatePurchase" value="usdRate" required>
+    <label for="logisticsCostUSD">Стоимость логистики (в долларах):</label>
+    <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" required>
 
-    <label for="logisticsCost">Логистика (в $):</label>
-    <input type="number" id="logisticsCost" required>
+    <label for="customDuty">Пошлина (%):</label>
+    <input type="number" id="customDuty" name="customDuty" required>
 
-    <label for="surveyorCost">Расходы на сюрвейера (в $):</label>
-    <input type="number" id="surveyorCost" value="7" required>
+    <label for="advance">Размер аванса покупателя (%):</label>
+    <input type="number" id="advance" value="3" name="advance" required>
 
-    <label for="marginality">Маржа (%):</label>
-    <input type="number" id="marginality" value="2.5" required>
+    <label for="moneyTerm">Срок денег (в днях):</label>
+    <input type="number" id="moneyTerm" value="120" name="moneyTerm" required>
 
-    <label for="exportDuty">Пошлина (в %):</label>
-    <input type="number" id="exportDuty" value="5.5" required>
-
-    <label for="creditCost">Стоимость денег (% в месяц):</label>
-    <input type="number" id="creditCost" value="15" required>
-
-    <label for="returnVAT">НДС (в %):</label>
-    <input type="number" id="returnVAT" value="10" required>
+    <label for="markup">Маржа (%):</label>
+    <input type="number" id="markup" value="2.5" name="markup" required>
 
       <button type="button" onclick="calculatePurchasePrice()">Рассчитать</button>
     </form>
   
-    <h2>Результат</h2>
     <p>Цена закупки: <span id="purchasePriceResult"></span> руб.</p>
   </div>
 
