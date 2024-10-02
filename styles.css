@@ -11,18 +11,19 @@ body {
 }
 
 .currency-block {
-  background: linear-gradient(to bottom, #004080, #0255b4); /* Градиент от темно-синего к светло-синему */
-  color: #fff;
-  padding: 10px;
+  background-color: #ffffff; /* Белый фон */
+  color: #333; /* Темный текст */
+  padding: 15px;
   text-align: center;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: 18px;
+  font-weight: 600;
   display: flex;
   justify-content: space-evenly;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 1000;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Легкая тень */
 }
 
 .currency-block p {
@@ -31,23 +32,26 @@ body {
   align-items: center;
 }
 
+
 .currency-icon {
-  width: 30px;
-  height: 30px;
-  margin-right: 8px;
+  width: 35px; /* Увеличены размеры иконок */
+  height: 35px;
+  margin-right: 10px;
 }
 
 .container {
-  max-width: 600px;
-  margin: 50px auto;
-  padding: 20px;
+  max-width: 700px; /* Ширина контейнера увеличена */
+  margin: 70px auto; /* Увеличены отступы сверху для лучшего визуального восприятия */
+  padding: 30px; /* Увеличены внутренние отступы */
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Увеличена размытие тени для глубины */
 }
 
 h1 {
   text-align: center;
+  font-size: 28px; /* Увеличен размер заголовка */
+  margin-bottom: 20px; /* Добавлен отступ снизу для отделения от других элементов */
 }
 
 form {
@@ -57,14 +61,21 @@ form {
 
 label {
   margin-bottom: 5px;
+  font-weight: 500; /* Сделан текст меток более выразительным */
 }
 
 input {
-  margin-bottom: 15px;
-  padding: 10px;
+  margin-bottom: 20px; /* Увеличены отступы между элементами ввода */
+  padding: 12px; /* Увеличен внутренний отступ для лучшего восприятия */
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px; /* Скругление углов */
+  transition: all 0.3s ease;
+}
+
+input:focus {
+  border-color: #00509E; /* Изменен цвет фокуса */
+  box-shadow: 0 0 10px rgba(0, 80, 158, 0.3); /* Увеличено размытие */
 }
 
 button {
@@ -73,7 +84,7 @@ button {
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 16px;
+  font-size: 18px; /* Увеличен размер шрифта для кнопок */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -88,30 +99,17 @@ p {
 }
 
 .result-box {
-  background-color: #f0f4ff; /* Светлый фон для области результатов */
+  background-color: #ffffff; /* Светлый фон для области результатов */
   border: 2px solid #0070f3; /* Граница основного цвета */
-  border-radius: 8px;
-  padding: 15px;
+  border-radius: 10px; /* Скругление углов */
+  padding: 20px; /* Увеличены внутренние отступы */
   text-align: center;
-  margin-top: 20px; /* Отступ сверху для лучшего визуального восприятия */
+  margin-top: 30px; /* Увеличены отступы сверху */
 }
 
 .result-box p {
-  margin: 5px 0; /* Уменьшение отступов между текстовыми элементами */
-}
-
-input {
-  margin-bottom: 15px;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
-input:focus {
-  border-color: #0070f3;
-  box-shadow: 0 0 10px rgba(0, 112, 243, 0.2);
+  margin: 8px 0; /* Увеличены отступы между текстовыми элементами */
+  font-weight: 600; /* Сделан текст более выразительным */
 }
 
 @media (max-width: 600px) {
@@ -120,16 +118,14 @@ input:focus {
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 24px; /* Уменьшен размер заголовка для мобильных устройств */
   }
 
   input {
     font-size: 14px;
-    padding: 8px;
+    padding: 10px; /* Уменьшены внутренние отступы */
   }
 }
-
-/* Остальные стили остаются без изменений */
 
 .tip-icon {
   width: 16px;
@@ -147,24 +143,25 @@ input:focus {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6); /* Увеличена прозрачность для лучшего эффекта */
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
   background-color: white;
-  padding: 20px;
-  border-radius: 10px;
+  padding: 25px; /* Увеличены внутренние отступы */
+  border-radius: 12px; /* Скругление углов */
   width: 90%;
-  max-width: 350px;
+  max-width: 400px; /* Увеличена максимальная ширина */
   margin: 0 auto;
   text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Увеличено размытие тени */
 }
 
 .close {
   float: right;
   font-size: 24px;
   cursor: pointer;
+  color: #333; /* Цвет для лучшей видимости */
 }
