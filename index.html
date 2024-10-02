@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <title>Калькулятор</title>
     <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/128/6322/6322544.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  </head>
+</head>
 
 <body>
   
   <div class="currency-block">
     <p>
-      <img class="currency-icon" src="https://img.icons8.com/?size=96&id=63196&format=png" alt="USD" onclick="openModal('usdTip')">
+      <img class="currency-icon" src="https://cdn-icons-png.flaticon.com/128/4436/4436493.png" alt="USD" onclick="openModal('usdTip')">
       <span id="usdRate">Загрузка...</span>
     </p>
 
@@ -62,36 +62,41 @@
       <button type="button" onclick="calculatePrice()">Рассчитать</button>
     </form>
 
-    <p>Цена продажи: <span id="result"></span> ¥/тн</p>
+    <div class="result-box">
+      <p>Цена продажи:</p>
+      <p id="result">0 ¥/тн</p>
+    </div>
   </div>
-
 
   <div class="container">
     <h1>Калькулятор цены закупки масла</h1>
     
     <form id="calcForm">
       <label for="marketPrice2">Цена продажи (¥):</label>
-    <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
+      <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
 
-    <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
-    <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
+      <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
+      <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
 
-    <label for="customDuty2">Пошлина (%):</label>
-    <input type="number" id="customDuty2" value="0" name="customDuty2" required>
+      <label for="customDuty2">Пошлина (%):</label>
+      <input type="number" id="customDuty2" value="0" name="customDuty2" required>
 
-    <label for="advance2">Размер аванса покупателя (%):</label>
-    <input type="number" id="advance2" value="0" name="advance2" required>
+      <label for="advance2">Размер аванса покупателя (%):</label>
+      <input type="number" id="advance2" value="0" name="advance2" required>
 
-    <label for="moneyTerm2">Срок денег (в днях):</label>
-    <input type="number" id="moneyTerm2" value="120" name="moneyTerm2" required>
+      <label for="moneyTerm2">Срок денег (в днях):</label>
+      <input type="number" id="moneyTerm2" value="120" name="moneyTerm2" required>
 
-    <label for="markup2">Маржа (%):</label>
-    <input type="number" id="markup2" value="3" name="markup2" required>
+      <label for="markup2">Маржа (%):</label>
+      <input type="number" id="markup2" value="3" name="markup2" required>
 
       <button type="button" onclick="calculatePurchasePrice()">Рассчитать</button>
     </form>
-  
-    <p>Цена закупки: <span id="purchasePriceResult"></span> ₽/тн</p>
+
+    <div class="result-box">
+      <p>Цена закупки:</p>
+      <p id="purchasePriceResult">0 ₽/тн</p>
+    </div>
   </div>
 
   <script src="script.js"></script>
