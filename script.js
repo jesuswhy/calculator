@@ -123,7 +123,7 @@ function fetchCNYRate() {
     const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
 
     // Пошлина = (Предварительная цена продажи - Логистика) * Размер пошлины в %
-    const customDuty = (preSalePrice - logisticsCostRUB) * customDutyRate;
+    const customDuty = (preSalePrice) * customDutyRate;
 
     // Итоговая цена продажи с учётом пошлины
     const salePrice = preSalePrice + customDuty;
@@ -132,7 +132,7 @@ function fetchCNYRate() {
     const salePriceCNY = salePrice / cnyRate;
 
     // Отображение результата
-    document.getElementById('result').textContent = salePriceCNY.toFixed(2);
+    document.getElementById('result').textContent = salePriceCNY.toFixed(0);
 }
 
 
@@ -140,25 +140,48 @@ function fetchCNYRate() {
 
 function calculatePurchasePrice() {
     const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
-    const marketPrice = parseFloat(document.getElementById('marketPrice').value);
-    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const customDuty = parseFloat(document.getElementById('customDuty').value);
-    const advance = parseFloat(document.getElementById('advance').value) / 100;
-    const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
-    const markup = parseFloat(document.getElementById('markup').value);
+    const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
+    const salePriceCNY = parseFloat(document.getElementById('marketPrice2').value);
+    const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD2').value);
+    const customDutyRate = parseFloat(document.getElementById('customDuty2').value) / 100; // Пошлина в %
+    const advance = parseFloat(document.getElementById('advance2').value) / 100; // Размер аванса
+    const moneyTerm = parseInt(document.getElementById('moneyTerm2').value);
+    const markup = parseFloat(document.getElementById('markup2').value);
+    const survey = 600; // Дополнительные фиксированные расходы
+
+    // Конвертация цены продажи из юаней в рубли
+    const salePriceRUB = salePriceCNY * cnyRate;
+
+    // Учитываем пошлину
+    const customDuty = salePriceRUB * customDutyRate;
+
+    // Предварительная цена продажи без учёта пошлины
+    const preSalePrice = salePriceRUB - customDuty;
+
+    // Учитываем возврат НДС
+    const VATRefund = (preSalePrice - survey) / 1.1 * 0.1;
+
+    // Общая стоимость закупки без логистики
+    const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100) - survey;
+
+    // Процент за срок денег, учитывая, что покупатель уже заплатил аванс
+    const interestRate = 0.0003896103896; // Среднесуточная процентная ставка
+    const remainingAmount = totalCost * (1 - advance); // Сумма после аванса
+    const interestCost = remainingAmount * interestRate * moneyTerm;
+
+    // Закупочная цена без учёта логистики
+    const purchasePrice = totalCost - interestCost;
 
     // Логистика в рублях
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    // Расчет цены закупки с учетом логистики, пошлин и процента денег
-    const purchasePrice = (marketPrice - logisticsCostRUB - 2 /* сюрвейер */) * usdRate 
-                        - customDuty 
-                        - (marketPrice * 0.02) /* МаржаСС */ 
-                        - (marketPrice * 0.023 * moneyTerm / 30) /* Стоимость денег */
-                        + (marketPrice * 0.09) /* НДС */;
+    // Общая закупочная цена с учетом логистики
+    const finalPurchasePrice = purchasePrice - logisticsCostRUB;
 
-    document.getElementById('purchasePriceResult').textContent = purchasePrice.toFixed(2);
+    // Отображение результата
+    document.getElementById('purchasePriceResult').textContent = finalPurchasePrice.toFixed(0);
 }
+
 
 
 function openModal(modalId) {
