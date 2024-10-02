@@ -162,7 +162,7 @@ function calculatePurchasePrice() {
     const VATRefund = (preSalePrice - survey) / 1.1 * 0.1;
 
     // Общая стоимость закупки без логистики
-    const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100) - survey;
+    const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100);
 
     // Процент за срок денег, учитывая, что покупатель уже заплатил аванс
     const interestRate = 0.0003896103896; // Среднесуточная процентная ставка
@@ -176,7 +176,7 @@ function calculatePurchasePrice() {
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
     // Общая закупочная цена с учетом логистики
-    const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey;
+    const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey * 2;
 
     // Отображение результата
     document.getElementById('purchasePriceResult').textContent = finalPurchasePrice.toFixed(0);
