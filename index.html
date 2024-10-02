@@ -12,13 +12,30 @@
 
   <div class="currency-block">
     <p>
-      <img src="https://cdn-icons-png.flaticon.com/128/4436/4436493.png" alt="USD" class="currency-icon"> 
-    <span id="usdRate">Загрузка...</span>
+      <img class="currency-icon" src="https://cdn-icons-png.flaticon.com/128/4436/4436493.png" alt="USD">
+      <span id="usdRate">Загрузка...</span>
+      <img class="tip-icon" src="https://cdn-icons-png.flaticon.com/128/6947/6947573.png" alt="info" onclick="openModal('usdTip')">
     </p>
+
     <p>
-      <img src="https://cdn-icons-png.flaticon.com/128/307/307396.png" alt="CNY" class="currency-icon">
+      <img class="currency-icon" src="https://cdn-icons-png.flaticon.com/128/307/307396.png" alt="CNY">
       <span id="cnyRate">Загрузка...</span>
+      <img class="tip-icon" src="https://cdn-icons-png.flaticon.com/128/6947/6947573.png" alt="info" onclick="openModal('cnyTip')">
     </p>
+  </div>
+
+  <div id="usdTip" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('usdTip')">&times;</span>
+      <p>Источник: ЦБ РФ</p>
+    </div>
+  </div>
+
+  <div id="cnyTip" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal('cnyTip')">&times;</span>
+      <p>Источник: декабрьский фьючерс на MOEX</p>
+    </div>
   </div>
 
   <div class="container">
