@@ -3,8 +3,8 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #f5f5f5;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to bottom, #eef2f3, #fafafa);
   margin: 0;
   padding: 0;
   color: #333;
@@ -35,7 +35,11 @@ body {
   width: 24px;
   height: 24px;
   margin-right: 8px;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .container {
   max-width: 600px;
@@ -72,14 +76,15 @@ button {
   background-color: #0070f3;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
   background-color: #005bb5;
+  transform: scale(1.05);
 }
 
 p {
@@ -101,17 +106,17 @@ input:focus {
 }
 
 @media (max-width: 600px) {
-  .container {
-    padding: 10px;
+  body {
+    padding: 0 5px;
   }
 
-  .header-nav {
-    display: flex;
-    flex-direction: column;
+  h1 {
+    font-size: 22px;
   }
 
-  .header-nav a {
-    margin: 5px 0;
+  input {
+    font-size: 14px;
+    padding: 8px;
   }
 }
 
@@ -143,8 +148,8 @@ input:focus {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  width: 80%;
-  max-width: 400px;
+  width: 90%;
+  max-width: 350px;
   margin: 0 auto;
   text-align: center;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
