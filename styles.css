@@ -32,7 +32,6 @@ body {
   align-items: center;
 }
 
-
 .currency-icon {
   width: 35px; /* Увеличены размеры иконок */
   height: 35px;
@@ -40,18 +39,18 @@ body {
 }
 
 .container {
-  max-width: 700px; /* Ширина контейнера увеличена */
-  margin: 70px auto; /* Увеличены отступы сверху для лучшего визуального восприятия */
-  padding: 30px; /* Увеличены внутренние отступы */
+  max-width: 700px;
+  margin: 70px auto;
+  padding: 30px;
   background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Увеличена размытие тени для глубины */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
   text-align: center;
-  font-size: 28px; /* Увеличен размер заголовка */
-  margin-bottom: 20px; /* Добавлен отступ снизу для отделения от других элементов */
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
 form {
@@ -61,36 +60,36 @@ form {
 
 label {
   margin-bottom: 5px;
-  font-weight: 500; /* Сделан текст меток более выразительным */
+  font-weight: 500;
 }
 
 input {
-  margin-bottom: 20px; /* Увеличены отступы между элементами ввода */
-  padding: 12px; /* Увеличен внутренний отступ для лучшего восприятия */
+  margin-bottom: 20px;
+  padding: 12px;
   font-size: 16px;
   border: 1px solid #ccc;
-  border-radius: 6px; /* Скругление углов */
+  border-radius: 6px;
   transition: all 0.3s ease;
 }
 
 input:focus {
-  border-color: #00509E; /* Изменен цвет фокуса */
-  box-shadow: 0 0 10px rgba(0, 80, 158, 0.3); /* Увеличено размытие */
+  border-color: #1E3A8A; /* Благородный синий цвет для фокуса */
+  box-shadow: 0 0 10px rgba(30, 58, 138, 0.3);
 }
 
 button {
   padding: 15px;
-  background-color: #0070f3;
+  background-color: #3B82F6; /* Яркий синий цвет */
   color: white;
   border: none;
   border-radius: 8px;
-  font-size: 18px; /* Увеличен размер шрифта для кнопок */
+  font-size: 18px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 button:hover {
-  background-color: #005bb5;
+  background-color: #1E3A8A; /* Более глубокий оттенок при наведении */
   transform: scale(1.05);
 }
 
@@ -99,17 +98,17 @@ p {
 }
 
 .result-box {
-  background-color: #ffffff; /* Светлый фон для области результатов */
-  border: 2px solid #0070f3; /* Граница основного цвета */
-  border-radius: 10px; /* Скругление углов */
-  padding: 20px; /* Увеличены внутренние отступы */
+  background-color: #ffffff;
+  border: 2px solid #3B82F6; /* Яркий синий для границы */
+  border-radius: 10px;
+  padding: 20px;
   text-align: center;
-  margin-top: 30px; /* Увеличены отступы сверху */
+  margin-top: 30px;
 }
 
 .result-box p {
-  margin: 8px 0; /* Увеличены отступы между текстовыми элементами */
-  font-weight: 600; /* Сделан текст более выразительным */
+  margin: 8px 0;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
@@ -118,12 +117,12 @@ p {
   }
 
   h1 {
-    font-size: 24px; /* Уменьшен размер заголовка для мобильных устройств */
+    font-size: 24px;
   }
 
   input {
     font-size: 14px;
-    padding: 10px; /* Уменьшены внутренние отступы */
+    padding: 10px;
   }
 }
 
@@ -143,25 +142,25 @@ p {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Увеличена прозрачность для лучшего эффекта */
+  background-color: rgba(0, 0, 0, 0.6);
   justify-content: center;
   align-items: center;
 }
 
 .modal-content {
   background-color: white;
-  padding: 25px; /* Увеличены внутренние отступы */
-  border-radius: 12px; /* Скругление углов */
+  padding: 25px;
+  border-radius: 12px;
   width: 90%;
-  max-width: 400px; /* Увеличена максимальная ширина */
+  max-width: 400px;
   margin: 0 auto;
   text-align: center;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2); /* Увеличено размытие тени */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .close {
   float: right;
   font-size: 24px;
   cursor: pointer;
-  color: #333; /* Цвет для лучшей видимости */
+  color: #333;
 }
