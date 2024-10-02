@@ -4,14 +4,14 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #004080, #0255b4); /* Градиент от темно-синего к светло-синему */
+  background: linear-gradient(to bottom, #eef2f3, #fafafa);
   margin: 0;
   padding: 0;
   color: #333;
 }
 
 .currency-block {
-  background-color: #004080;
+  background: linear-gradient(to bottom, #004080, #0255b4); /* Градиент от темно-синего к светло-синему */
   color: #fff;
   padding: 10px;
   text-align: center;
@@ -24,6 +24,7 @@ body {
   width: 100%;
   z-index: 1000;
 }
+
 
 .currency-block p {
   margin: 0;
