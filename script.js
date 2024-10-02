@@ -93,47 +93,51 @@ function fetchCNYRate() {
     fetchCNYRate();
   };
 
-// Функция для расчета цены продажи масла
-function calculatePrice() {
+
+  function calculatePrice() {
     const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const customDuty = parseFloat(document.getElementById('customDuty').value);
-    const advance = parseFloat(document.getElementById('advance').value) / 100;
+    const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100; // Пошлина в %
+    const advance = parseFloat(document.getElementById('advance').value) / 100; // Размер аванса
     const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
     const markup = parseFloat(document.getElementById('markup').value);
-    const survey = 600;
+    const survey = 600; // Дополнительные фиксированные расходы
 
-    // Переводим логистику в рубли
+    // Логистика в рублях
     const logisticsCostRUB = logisticsCostUSD * usdRate;
-    console.log('Логистика в рублях: ' + logisticsCostRUB);
 
-    // Общая стоимость
+    // Общая стоимость закупки с учетом логистики
     const totalCost = purchasePrice + logisticsCostRUB;
-    console.log('Общая стоимость: ' + totalCost);
-    
-    // Учет аванса и процента за срок
-    const interestRate = 0.0003896103896; // Процентная ставка за день
-    const interestCost = totalCost * interestRate * moneyTerm;
-    console.log('Процент за срок: ' + interestCost);
+
+    // Процент за срок денег, учитывая, что покупатель уже заплатил аванс
+    const interestRate = 0.0003896103896; // Среднесуточная процентная ставка
+    const remainingAmount = totalCost * (1 - advance); // Сумма после аванса
+    const interestCost = remainingAmount * interestRate * moneyTerm;
 
     // Возврат НДС
-    const VATRefund = purchasePrice - purchasePrice / 1.1;
-    console.log('Возврат НДС: ' + VATRefund);
+    const VATRefund = purchasePrice / 1.1 * 0.1;
 
-    // Итоговая цена продажи
-    const salePrice = ((totalCost + interestCost + survey) - VATRefund);
-    console.log('Итоговая цена продажи: ' + salePrice);
+    // Предварительная цена продажи без учёта пошлины
+    const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
+
+    // Пошлина = (Предварительная цена продажи - Логистика) * Размер пошлины в %
+    const customDuty = (preSalePrice - logisticsCostRUB) * customDutyRate;
+
+    // Итоговая цена продажи с учётом пошлины
+    const salePrice = preSalePrice + customDuty;
 
     // Конвертация в юани
     const salePriceCNY = salePrice / cnyRate;
-    console.log('Цена продажи в юанях: ' + salePriceCNY);
 
+    // Отображение результата
     document.getElementById('result').textContent = salePriceCNY.toFixed(2);
 }
 
-// Функция для расчета цены закупки масла
+
+
+
 function calculatePurchasePrice() {
     const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
     const marketPrice = parseFloat(document.getElementById('marketPrice').value);
@@ -146,28 +150,12 @@ function calculatePurchasePrice() {
     // Логистика в рублях
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    // Цена закупки по формуле
-    const purchasePrice = (marketPrice - logisticsCostRUB - 2 /* сюрвейер */) * usdRate - customDuty - (marketPrice * 0.02) /* МаржаСС */ - (marketPrice * 0.023 * moneyTerm / 30) /* Стоимость денег */ + (marketPrice * 0.09) /* НДС */;
+    // Расчет цены закупки с учетом логистики, пошлин и процента денег
+    const purchasePrice = (marketPrice - logisticsCostRUB - 2 /* сюрвейер */) * usdRate 
+                        - customDuty 
+                        - (marketPrice * 0.02) /* МаржаСС */ 
+                        - (marketPrice * 0.023 * moneyTerm / 30) /* Стоимость денег */
+                        + (marketPrice * 0.09) /* НДС */;
 
     document.getElementById('purchasePriceResult').textContent = purchasePrice.toFixed(2);
 }
-
-
-function openModal(modalId) {
-    document.getElementById(modalId).style.display = 'flex';
-  }
-  
-  function closeModal(modalId) {
-    document.getElementById(modalId).style.display = 'none';
-  }
-  
-  // Закрытие модального окна при клике вне его
-  window.onclick = function(event) {
-    const modals = document.querySelectorAll('.modal');
-    modals.forEach(modal => {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    });
-  };
-  
