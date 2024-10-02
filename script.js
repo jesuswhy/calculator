@@ -176,7 +176,7 @@ function calculatePurchasePrice() {
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
     // Общая закупочная цена с учетом логистики
-    const finalPurchasePrice = purchasePrice - logisticsCostRUB;
+    const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey;
 
     // Отображение результата
     document.getElementById('purchasePriceResult').textContent = finalPurchasePrice.toFixed(0);
