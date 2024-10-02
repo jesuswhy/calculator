@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background: linear-gradient(to bottom, #eef2f3, #fafafa);
+  background: linear-gradient(to bottom, #004080, #0255b4); /* Градиент от темно-синего к светло-синему */
   margin: 0;
   padding: 0;
   color: #333;
