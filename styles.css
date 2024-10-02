@@ -35,11 +35,7 @@ body {
   width: 24px;
   height: 24px;
   margin-right: 8px;
-  border-radius: 50%;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-
 
 .container {
   max-width: 600px;
@@ -107,7 +103,7 @@ input:focus {
 
 @media (max-width: 600px) {
   body {
-    padding: 0 5px;
+    padding: 0px;
   }
 
   h1 {
@@ -160,3 +156,4 @@ input:focus {
   font-size: 24px;
   cursor: pointer;
 }
+
