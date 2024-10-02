@@ -8,8 +8,8 @@ async function fetchUSDRate() {
             throw new Error(`Ошибка при загрузке: ${response.status}`);
         }
 
-        const data = await response.json(); 
-        const xml = data.contents; 
+        const data = await response.json(); // Получаем JSON
+        const xml = data.contents; // Получаем XML содержимое
 
         // Парсим XML
         const parser = new DOMParser();
@@ -159,3 +159,22 @@ function calculatePurchasePrice() {
 
     document.getElementById('purchasePriceResult').textContent = purchasePrice.toFixed(2);
 }
+
+
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+  }
+  
+  function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+  }
+  
+  // Закрытие модального окна при клике вне его
+  window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+  };
