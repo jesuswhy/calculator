@@ -86,7 +86,7 @@ async function fetchUSDRate() {
     const salePriceCNY = salePrice / cnyRate;
 
     // Отображение результата
-    document.getElementById('result').textContent = salePriceCNY.toFixed(0);
+    document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`; // Добавляем "руб."
 }
 
 
@@ -133,7 +133,8 @@ function calculatePurchasePrice() {
     const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey * 2;
 
     // Отображение результата
-    document.getElementById('purchasePriceResult').textContent = finalPurchasePrice.toFixed(0);
+document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`; // Добавляем "руб."
+
 }
 
 
@@ -238,3 +239,5 @@ window.onclick = function(event) {
         }
     });
 };
+
+
