@@ -42,10 +42,10 @@
     
     <form id="calcForm">
       <label for="purchasePrice">Цена закупки (₽):</label>
-      <input type="number" id="purchasePrice" name="purchasePrice" required>
+      <input type="number" id="purchasePrice" name="purchasePrice" placeholder="Цена за тонну" required>
 
       <label for="logisticsCostUSD">Стоимость логистики ($):</label>
-      <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" required>
+      <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" placeholder="Цена за тонну" required>
 
       <label for="customDuty">Пошлина (%):</label>
       <input type="number" id="customDuty" value="0" name="customDuty" required>
@@ -62,7 +62,7 @@
       <button type="button" onclick="calculatePrice()">Рассчитать</button>
     </form>
 
-    <p>Цена продажи: <span id="result"></span> ¥</p>
+    <p>Цена продажи: <span id="result"></span> ¥/тн</p>
   </div>
 
 
@@ -71,10 +71,10 @@
     
     <form id="calcForm">
       <label for="marketPrice2">Цена продажи (¥):</label>
-    <input type="number" id="marketPrice2" required>
+    <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
 
     <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
-    <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" required>
+    <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
 
     <label for="customDuty2">Пошлина (%):</label>
     <input type="number" id="customDuty2" value="0" name="customDuty2" required>
@@ -91,7 +91,7 @@
       <button type="button" onclick="calculatePurchasePrice()">Рассчитать</button>
     </form>
   
-    <p>Цена закупки: <span id="purchasePriceResult"></span> ₽</p>
+    <p>Цена закупки: <span id="purchasePriceResult"></span> ₽/тн</p>
   </div>
 
   <script src="script.js"></script>
