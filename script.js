@@ -8,8 +8,8 @@ async function fetchUSDRate() {
             throw new Error(`Ошибка при загрузке: ${response.status}`);
         }
 
-        const data = await response.json(); // Получаем JSON
-        const xml = data.contents; // Получаем XML содержимое
+        const data = await response.json(); 
+        const xml = data.contents; 
 
         // Парсим XML
         const parser = new DOMParser();
