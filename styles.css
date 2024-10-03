@@ -8,7 +8,24 @@ body {
   margin: 0;
   padding: 0;
   color: #333;
+  
 }
+
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+body.dark-theme .container {
+  background-color: #1e1e1e;
+}
+
+body.dark-theme input {
+  background-color: #2e2e2e;
+  color: #ffffff;
+  border-color: #444;
+}
+
 
 .currency-block {
   background-color: #ffffff; /* Белый фон */
@@ -104,6 +121,7 @@ p {
   padding: 20px;
   text-align: center;
   margin-top: 30px;
+  
 }
 
 .result-box p {
@@ -164,3 +182,4 @@ p {
   cursor: pointer;
   color: #333;
 }
+
