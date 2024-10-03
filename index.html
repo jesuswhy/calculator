@@ -7,13 +7,17 @@
     <title>Калькулятор</title>
     <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/128/6322/6322544.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
 </head>
 
 <body>
+
+
   
   <div class="currency-block">
     <p>
-      <img class="currency-icon" src="https://i.ibb.co/jMMVFzs/usd.png" alt="USD" onclick="openModal('usdTip')">
+      <img class="currency-icon" src="https://i.ibb.co/D7PWj8t/usd.png" alt="USD" onclick="openModal('usdTip')">
       <span id="usdRate">Загрузка...</span>
     </p>
 
@@ -22,6 +26,8 @@
       <span id="cnyRate">Загрузка...</span>
     </p>
   </div>
+
+  
 
   <div id="usdTip" class="modal">
     <div class="modal-content">
@@ -59,7 +65,10 @@
       <label for="markup">Маржа (%):</label>
       <input type="number" id="markup" value="3" name="markup" required>
 
-      <button type="button" onclick="calculatePrice()">Рассчитать</button>
+      <button type="button" onclick="calculatePrice()">
+        <i class="fas fa-calculator"></i> Рассчитать
+      </button>
+      
     </form>
 
     <div class="result-box">
@@ -90,7 +99,9 @@
       <label for="markup2">Маржа (%):</label>
       <input type="number" id="markup2" value="3" name="markup2" required>
 
-      <button type="button" onclick="calculatePurchasePrice()">Рассчитать</button>
+      <button type="button" onclick="calculatePurchasePrice()">
+        <i class="fas fa-calculator"></i> Рассчитать
+      </button>
     </form>
 
     <div class="result-box">
