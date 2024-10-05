@@ -137,6 +137,7 @@ p {
   cursor: pointer;
 }
 
+/* Стили для модального окна */
 .modal {
   display: none;
   position: fixed;
@@ -171,3 +172,10 @@ p {
   color: #333;
 }
 
+.footer {
+  background-color: #3b3b3e;
+  color: #fff;
+  padding: 15px;
+  text-align: center;
+  font-size: 18px;
+}
