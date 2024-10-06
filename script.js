@@ -231,6 +231,125 @@ function closeModal(modalId) {
     document.getElementById(modalId).style.display = 'none';
 }
 
+
+// Функции для открытия и закрытия модального окна Telegram
+let currentCalculator = ''; // Хранит, какой калькулятор отправляет данные ('sell' или 'buy')
+
+function openTelegramModal(calculatorType) {
+    currentCalculator = calculatorType;
+    document.getElementById('telegramModal').style.display = 'flex';
+}
+
+function closeTelegramModal() {
+    document.getElementById('telegramModal').style.display = 'none';
+}
+
+// Обработчик клика вне модального окна для его закрытия
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+};
+
+// Функция для отправки данных в Telegram
+async function sendTelegram() {
+    const chatType = document.getElementById('telegramChatSelect').value;
+    if (!chatType) {
+        alert('Пожалуйста, выберите чат для отправки.');
+        return;
+    }
+
+    let message = '';
+    if (currentCalculator === 'sell') {
+        const purchasePrice = document.getElementById('purchasePrice').value || '0';
+        const logisticsCostUSD = document.getElementById('logisticsCostUSD').value || '0';
+        const customDuty = document.getElementById('customDuty').value || '0';
+        const advance = document.getElementById('advance').value || '0';
+        const moneyTerm = document.getElementById('moneyTerm').value || '0';
+        const markup = document.getElementById('markup').value || '0';
+        const result = document.getElementById('result').textContent || '0 ¥/тн';
+
+        message = `🏷️ *Продажа*\n` +
+                  `Цена закупки: ${purchasePrice} ₽/тн\n` +
+                  `Стоимость логистики: ${logisticsCostUSD} $\n` +
+                  `Пошлина: ${customDuty} %\n` +
+                  `Размер аванса покупателя: ${advance} %\n` +
+                  `Срок денег: ${moneyTerm} дней\n` +
+                  `Маржа: ${markup} %\n` +
+                  `❗ Цена продажи: ${result}`;
+    } else if (currentCalculator === 'buy') {
+        const marketPrice2 = document.getElementById('marketPrice2').value || '0';
+        const logisticsCostUSD2 = document.getElementById('logisticsCostUSD2').value || '0';
+        const customDuty2 = document.getElementById('customDuty2').value || '0';
+        const advance2 = document.getElementById('advance2').value || '0';
+        const moneyTerm2 = document.getElementById('moneyTerm2').value || '0';
+        const markup2 = document.getElementById('markup2').value || '0';
+        const purchasePriceResult = document.getElementById('purchasePriceResult').textContent || '0 ₽/тн';
+
+        message = `🛒 *Закупка*\n` +
+                  `Цена продажи: ${marketPrice2} ¥/тн\n` +
+                  `Стоимость логистики: ${logisticsCostUSD2} $\n` +
+                  `Пошлина: ${customDuty2} %\n` +
+                  `Размер аванса покупателя: ${advance2} %\n` +
+                  `Срок денег: ${moneyTerm2} дней\n` +
+                  `Маржа: ${markup2} %\n` +
+                  `❗ Цена закупки с НДС: ${purchasePriceResult}`;
+    } else {
+        alert('Неизвестный тип калькулятора.');
+        return;
+    }
+
+    // Здесь замените на ваш собственный серверный endpoint для отправки данных в Telegram
+    const botToken = '7034021771:AAFJMbmA2XjGFFpvQqTymR_AJ5-xwKq1g6c'; // Не размещайте токен бота на клиенте!
+    const buyerChannelID = '-1002049012362';  // ID канала для покупателей
+    const supplierChannelID = '-1001855848392';  // ID канала для поставщиков
+
+    let chatID = '';
+    if (chatType === 'buyer') {
+        chatID = buyerChannelID;
+    } else if (chatType === 'supplier') {
+        chatID = supplierChannelID;
+    } else {
+        alert('Неверный выбор чата.');
+        return;
+    }
+
+    const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatID,
+                text: message,
+                parse_mode: 'Markdown'
+            })
+        });
+
+        const result = await response.json();
+        if (result.ok) {
+            alert('Сообщение успешно отправлено в Telegram!');
+            closeTelegramModal();
+        } else {
+            console.error('Ошибка отправки в Telegram:', result.description);
+            alert('Ошибка отправки сообщения в Telegram.');
+        }
+    } catch (error) {
+        console.error('Ошибка при отправке сообщения:', error);
+        alert('Произошла ошибка при отправке сообщения.');
+    }
+}
+
+// Функции расчета калькуляторов остаются без изменений
+// ... (ваши функции calculatePrice и calculatePurchasePrice)
+
+
 window.onclick = function(event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
@@ -241,3 +360,41 @@ window.onclick = function(event) {
 };
 
 
+async function sendToTelegram(channelType) {
+    const buyerChannelID = '667861609';  // ID канала для покупателей
+    const supplierChannelID = '667861609';  // ID канала для поставщиков
+    const botToken = '7741982545:AAEfuO1rs0rr6W6vtX-IgkM5pkCtEnBsCT8';  // Токен вашего бота
+
+    // Определяем ID канала, в который нужно отправить
+    const chatID = channelType === 'buyer' ? buyerChannelID : supplierChannelID;
+
+    // Получаем данные из калькулятора
+    const salePriceCNY = document.getElementById('result').textContent || 'Нет данных';
+    const purchasePrice = document.getElementById('purchasePriceResult').textContent || 'Нет данных';
+
+    const message = `Результаты расчета:\nЦена продажи: ${salePriceCNY}\nЦена закупки: ${purchasePrice}`;
+
+    // Отправляем данные в канал
+    try {
+        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: chatID,
+                text: message
+            })
+        });
+
+        const result = await response.json();
+        if (result.ok) {
+            alert('Сообщение успешно отправлено!');
+        } else {
+            alert('Ошибка отправки сообщения в Telegram.');
+        }
+    } catch (error) {
+        console.error('Ошибка:', error);
+        alert('Ошибка при отправке сообщения.');
+    }
+}
