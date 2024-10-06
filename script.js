@@ -8,17 +8,17 @@ async function fetchUSDRate() {
             throw new Error(`Ошибка при загрузке: ${response.status}`);
         }
 
-        const data = await response.json(); // Получаем JSON
-        const xml = data.contents; // Получаем XML содержимое
+        const data = await response.json(); 
+        const xml = data.contents; 
 
-        // Парсим XML
+   
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(xml, 'text/xml');
         const valutes = xmlDoc.getElementsByTagName('Valute');
 
         let usdRate = null;
 
-        // Ищем данные о долларе
+
         for (let valute of valutes) {
             const charCode = valute.getElementsByTagName('CharCode')[0].textContent;
             if (charCode === 'USD') {
@@ -28,13 +28,13 @@ async function fetchUSDRate() {
         }
 
         if (usdRate) {
-            // Заменяем запятую на точку в результате
+           
             const formattedUSDRate = usdRate.replace(',', '.');
 
-            // Выводим курс доллара в элементе на странице
+          
             const usdRateElement = document.getElementById('usdRate');
             if (usdRateElement) {
-                usdRateElement.textContent = `${formattedUSDRate}`; // Устанавливаем курс доллара в элемент
+                usdRateElement.textContent = `${formattedUSDRate}`; 
             }
             console.log('Курс доллара: ' + formattedUSDRate);
         } else {
@@ -53,40 +53,31 @@ async function fetchUSDRate() {
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100; // Пошлина в %
-    const advance = parseFloat(document.getElementById('advance').value) / 100; // Размер аванса
+    const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100; 
+    const advance = parseFloat(document.getElementById('advance').value) / 100; 
     const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
     const markup = parseFloat(document.getElementById('markup').value);
-    const survey = 600; // Дополнительные фиксированные расходы
+    const survey = 600; 
 
-    // Логистика в рублях
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    // Общая стоимость закупки с учетом логистики
     const totalCost = purchasePrice + logisticsCostRUB;
 
-    // Процент за срок денег, учитывая, что покупатель уже заплатил аванс
-    const interestRate = 0.0003896103896; // Среднесуточная процентная ставка
-    const remainingAmount = totalCost * (1 - advance); // Сумма после аванса
+    const interestRate = 0.0003896103896; 
+    const remainingAmount = totalCost * (1 - advance);
     const interestCost = remainingAmount * interestRate * moneyTerm;
 
-    // Возврат НДС
     const VATRefund = purchasePrice / 1.1 * 0.1;
 
-    // Предварительная цена продажи без учёта пошлины
     const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
 
-    // Пошлина = (Предварительная цена продажи - Логистика) * Размер пошлины в %
     const customDuty = (preSalePrice) * customDutyRate;
 
-    // Итоговая цена продажи с учётом пошлины
     const salePrice = preSalePrice + customDuty;
 
-    // Конвертация в юани
     const salePriceCNY = salePrice / cnyRate;
 
-    // Отображение результата
-    document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`; // Добавляем "руб."
+    document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`; 
 }
 
 
@@ -97,43 +88,33 @@ function calculatePurchasePrice() {
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const salePriceCNY = parseFloat(document.getElementById('marketPrice2').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD2').value);
-    const customDutyRate = parseFloat(document.getElementById('customDuty2').value) / 100; // Пошлина в %
-    const advance = parseFloat(document.getElementById('advance2').value) / 100; // Размер аванса
+    const customDutyRate = parseFloat(document.getElementById('customDuty2').value) / 100; 
+    const advance = parseFloat(document.getElementById('advance2').value) / 100; 
     const moneyTerm = parseInt(document.getElementById('moneyTerm2').value);
     const markup = parseFloat(document.getElementById('markup2').value);
-    const survey = 600; // Дополнительные фиксированные расходы
+    const survey = 600; 
 
-    // Конвертация цены продажи из юаней в рубли
     const salePriceRUB = salePriceCNY * cnyRate;
 
-    // Учитываем пошлину
     const customDuty = salePriceRUB * customDutyRate;
 
-    // Предварительная цена продажи без учёта пошлины
     const preSalePrice = salePriceRUB - customDuty;
 
-    // Учитываем возврат НДС
     const VATRefund = (preSalePrice - survey) / 1.1 * 0.1;
 
-    // Общая стоимость закупки без логистики
     const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100);
 
-    // Процент за срок денег, учитывая, что покупатель уже заплатил аванс
-    const interestRate = 0.0003896103896; // Среднесуточная процентная ставка
-    const remainingAmount = totalCost * (1 - advance); // Сумма после аванса
+    const interestRate = 0.0003896103896; 
+    const remainingAmount = totalCost * (1 - advance); 
     const interestCost = remainingAmount * interestRate * moneyTerm;
 
-    // Закупочная цена без учёта логистики
     const purchasePrice = totalCost - interestCost;
 
-    // Логистика в рублях
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    // Общая закупочная цена с учетом логистики
     const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey * 2;
 
-    // Отображение результата
-document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`; // Добавляем "руб."
+document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`; 
 
 }
 
@@ -232,8 +213,7 @@ function closeModal(modalId) {
 }
 
 
-// Функции для открытия и закрытия модального окна Telegram
-let currentCalculator = ''; // Хранит, какой калькулятор отправляет данные ('sell' или 'buy')
+let currentCalculator = ''; 
 
 function openTelegramModal(calculatorType) {
     currentCalculator = calculatorType;
@@ -244,7 +224,6 @@ function closeTelegramModal() {
     document.getElementById('telegramModal').style.display = 'none';
 }
 
-// Обработчик клика вне модального окна для его закрытия
 window.onclick = function(event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
@@ -254,7 +233,6 @@ window.onclick = function(event) {
     });
 };
 
-// Функция для отправки данных в Telegram
 async function sendTelegram() {
     const chatType = document.getElementById('telegramChatSelect').value;
     if (!chatType) {
@@ -302,10 +280,9 @@ async function sendTelegram() {
         return;
     }
 
-    // Здесь замените на ваш собственный серверный endpoint для отправки данных в Telegram
-    const botToken = '7034021771:AAFJMbmA2XjGFFpvQqTymR_AJ5-xwKq1g6c'; // Не размещайте токен бота на клиенте!
-    const buyerChannelID = '-1002049012362';  // ID канала для покупателей
-    const supplierChannelID = '-1001855848392';  // ID канала для поставщиков
+    const botToken = '7034021771:AAFJMbmA2XjGFFpvQqTymR_AJ5-xwKq1g6c'; 
+    const buyerChannelID = '-1002049012362';  
+    const supplierChannelID = '-1001855848392';  
 
     let chatID = '';
     if (chatType === 'buyer') {
@@ -346,8 +323,6 @@ async function sendTelegram() {
     }
 }
 
-// Функции расчета калькуляторов остаются без изменений
-// ... (ваши функции calculatePrice и calculatePurchasePrice)
 
 
 window.onclick = function(event) {
@@ -361,20 +336,17 @@ window.onclick = function(event) {
 
 
 async function sendToTelegram(channelType) {
-    const buyerChannelID = '667861609';  // ID канала для покупателей
-    const supplierChannelID = '667861609';  // ID канала для поставщиков
-    const botToken = '7741982545:AAEfuO1rs0rr6W6vtX-IgkM5pkCtEnBsCT8';  // Токен вашего бота
+    const buyerChannelID = '667861609';  
+    const supplierChannelID = '667861609';  
+    const botToken = '7741982545:AAEfuO1rs0rr6W6vtX-IgkM5pkCtEnBsCT8';  
 
-    // Определяем ID канала, в который нужно отправить
     const chatID = channelType === 'buyer' ? buyerChannelID : supplierChannelID;
 
-    // Получаем данные из калькулятора
     const salePriceCNY = document.getElementById('result').textContent || 'Нет данных';
     const purchasePrice = document.getElementById('purchasePriceResult').textContent || 'Нет данных';
 
     const message = `Результаты расчета:\nЦена продажи: ${salePriceCNY}\nЦена закупки: ${purchasePrice}`;
 
-    // Отправляем данные в канал
     try {
         const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: 'POST',
