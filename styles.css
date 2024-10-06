@@ -191,12 +191,10 @@ p {
   color: #d1d1d1; /* Светло-серый текст */
   padding: 20px 0;
   text-align: center;
+  align-items: center;
   font-size: 14px;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Лёгкая тень для глубины */
 }
-
-
-/* Добавьте это в ваш файл styles.css */
 
 /* Кнопка отправки в Telegram */
 .telegram-button {
@@ -210,6 +208,8 @@ p {
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   display: flex;
+  width: 60%;
+  text-align: center;
   align-items: center;
 }
 
