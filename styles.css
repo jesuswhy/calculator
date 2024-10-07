@@ -87,7 +87,7 @@ button {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 2px solid transparent;
   font-size: 16px;
-  padding: 16px;
+  padding: 12px;
   border-radius: 12px;
   transition: transform 0.2s ease, background-color 0.2s ease;
 }
@@ -263,7 +263,7 @@ p {
   display: flex;
   flex-direction: row-reverse; 
   align-items: center; 
-  margin-top: 20px;
+  margin-top: 7px;
   height: 100px; 
 }
 
