@@ -233,6 +233,21 @@ window.onclick = function(event) {
     });
 };
 
+  
+  // Функция показа кастомного алерта
+  function showAlert() {
+    const alertBox = document.getElementById("successAlert");
+    alertBox.style.display = "flex"; // Показать алерт
+  }
+  
+  // Функция закрытия кастомного алерта
+  function closeAlert() {
+    const alertBox = document.getElementById("successAlert");
+    alertBox.style.display = "none"; // Скрыть алерт
+  }
+  
+
+
 async function sendTelegram() {
     const chatType = document.getElementById('telegramChatSelect').value;
     if (!chatType) {
@@ -311,7 +326,7 @@ async function sendTelegram() {
 
         const result = await response.json();
         if (result.ok) {
-            alert('Сообщение успешно отправлено в Telegram!');
+            showAlert();
             closeTelegramModal();
         } else {
             console.error('Ошибка отправки в Telegram:', result.description);
