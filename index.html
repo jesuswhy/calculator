@@ -64,15 +64,18 @@
       </button>
       
     </form>
-
-    <div class="result-box">
-      <p>Цена продажи:</p>
-      <p id="result">0 ¥/тн</p>
+    <div class="result-container">
+      <button class="telegram-button" onclick="openTelegramModal('sell')">
+        <i class="fab fa-telegram-plane"></i>
+      </button>
+      
+      <div class="result-box">
+        <p>Цена продажи:</p>
+        <p id="result">0 ¥/тн</p>
+      </div>
     </div>
-
-    <button class="telegram-button" onclick="openTelegramModal('sell')">
-      <i class="fab fa-telegram-plane"></i> Отправить в Telegram
-    </button>
+    
+    
   </div>
 
   <div class="container">
@@ -101,15 +104,18 @@
         <i class="fas fa-calculator"></i> Рассчитать
       </button>
     </form>
-
-    <div class="result-box">
-      <p>Цена закупки с НДС:</p>
-      <p id="purchasePriceResult">0 ₽/тн</p>
+    
+    <div class="result-container">
+      <button class="telegram-button" onclick="openTelegramModal('buy')">
+        <i class="fab fa-telegram-plane"></i>
+      </button>
+      
+      <div class="result-box">
+        <p>Цена закупки с НДС:</p>
+        <p id="purchasePriceResult">0 ¥/тн</p>
+      </div>
     </div>
 
-    <button class="telegram-button" onclick="openTelegramModal('buy')">
-      <i class="fab fa-telegram-plane"></i> Отправить в Telegram
-    </button>
   </div>
 
   <div id="telegramModal" class="modal">
