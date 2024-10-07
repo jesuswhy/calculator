@@ -103,16 +103,22 @@ p {
 }
 
 .result-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;  
+  align-items: center;    
   background-color: #ffffff;
   border: 2px solid #3B82F6; 
   border-radius: 10px;
   padding: 20px;
   text-align: center;
-  margin-top: 30px;
-  font-size: 24px;  
+  font-size: 24px;
   font-weight: 700;
-  
+  flex-grow: 1;
+  height: 100%;
+  margin-right: 10px;
 }
+
 
 .result-box p {
   margin: 8px 0;
@@ -199,26 +205,27 @@ p {
   background-color: #0088cc;
   border: none;
   color: white;
-  padding: 12px 20px;
-  margin-top: 20px;
+  padding: 0 20px;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   display: flex;
-  width: 60%;
-  text-align: center;
   align-items: center;
+  justify-content: center;
+  height: 100%; 
+  width: 60px; 
 }
 
 .telegram-button i {
-  margin-right: 8px;
+  font-size: 24px;
 }
 
 .telegram-button:hover {
   background-color: #006699;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
+
 
 #telegramModal .modal-content {
   max-width: 500px;
@@ -250,3 +257,12 @@ p {
 #telegramModal button:hover {
   background-color: #006699;
 }
+
+.result-container {
+  display: flex;
+  flex-direction: row-reverse; 
+  align-items: center; 
+  margin-top: 20px;
+  height: 100px; 
+}
+
