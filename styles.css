@@ -109,7 +109,7 @@ p {
   justify-content: center;  
   align-items: center;    
   background-color: #ffffff;
-  border: 2px solid #ff6600; 
+  border: 2px solid #ff853a; 
   border-radius: 10px;
   padding: 20px;
   text-align: center;
@@ -122,8 +122,8 @@ p {
 
 
 .result-box p {
-  margin: 8px 0;
-  font-weight: 600;
+  margin: 2px 0;
+  font-weight: 400;
 }
 
 @media (max-width: 600px) {
