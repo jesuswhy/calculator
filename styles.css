@@ -4,7 +4,7 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  background-color: #f0f0f0; /* более мягкий оттенок */
+  background-color: #f0f0f0; 
   margin: 0;
   padding: 0;
   color: #333;
@@ -54,7 +54,7 @@ h1 {
   text-align: center;
   font-size: 36px;
   color: #222;
-  margin-bottom: 30px; /* больше пространства */
+  margin-bottom: 30px; 
 }
 
 form {
@@ -82,7 +82,7 @@ input:focus {
 }
 
 button {
-  background-color: #ff6600; /* яркий оранжевый для акцентов */
+  background-color: #ff6600; 
   color: #fff;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border: 2px solid transparent;
@@ -94,7 +94,7 @@ button {
 
 button:hover {
   background-color: #cc5200;
-  transform: translateY(-2px); /* небольшое поднятие кнопки при наведении */
+  transform: translateY(-2px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
@@ -267,3 +267,76 @@ p {
   height: 100px; 
 }
 
+/* Общие стили для алерта */
+.custom-alert {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.custom-alert-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Анимация появления */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Стили кнопки закрытия */
+.close-alert {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  color: #555;
+  cursor: pointer;
+}
+
+.close-alert:hover {
+  color: #ff6600; /* акцент при наведении */
+}
+
+/* Стили текста и кнопки */
+.custom-alert p {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.alert-button {
+  background-color: #ff6600;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.alert-button:hover {
+  background-color: #cc5200;
+}
