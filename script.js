@@ -1,6 +1,6 @@
 async function fetchUSDRate() {
     const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.cbr.ru/scripts/XML_daily.asp');
-
+ 
     try {
         const response = await fetch(url);
 
