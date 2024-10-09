@@ -398,7 +398,7 @@ p {
 }
 
 input:checked + .slider {
-  background-color: #8E24AA; /* Цвет переключателя при включении */
+  background-color: #FF6F61; /* Цвет переключателя при включении */
 }
 
 input:checked + .slider:before {
