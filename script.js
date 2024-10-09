@@ -75,7 +75,7 @@ async function fetchUSDRate() {
 
     const salePrice = preSalePrice + customDuty;
 
-    const salePriceCNY = salePrice / cnyRate;
+    const salePriceCNY = salePrice / cnyRate - 20;
 
     document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`; 
 }
@@ -112,7 +112,7 @@ function calculatePurchasePrice() {
 
     const logisticsCostRUB = logisticsCostUSD * usdRate;
 
-    const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey * 2;
+    const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey;
 
 document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`; 
 
@@ -348,40 +348,3 @@ window.onclick = function(event) {
         }
     });
 };
-
-
-async function sendToTelegram(channelType) {
-    const buyerChannelID = '667861609';  
-    const supplierChannelID = '667861609';  
-    const botToken = '7741982545:AAEfuO1rs0rr6W6vtX-IgkM5pkCtEnBsCT8';  
-
-    const chatID = channelType === 'buyer' ? buyerChannelID : supplierChannelID;
-
-    const salePriceCNY = document.getElementById('result').textContent || 'Нет данных';
-    const purchasePrice = document.getElementById('purchasePriceResult').textContent || 'Нет данных';
-
-    const message = `Результаты расчета:\nЦена продажи: ${salePriceCNY}\nЦена закупки: ${purchasePrice}`;
-
-    try {
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: chatID,
-                text: message
-            })
-        });
-
-        const result = await response.json();
-        if (result.ok) {
-            alert('Сообщение успешно отправлено!');
-        } else {
-            alert('Ошибка отправки сообщения в Telegram.');
-        }
-    } catch (error) {
-        console.error('Ошибка:', error);
-        alert('Ошибка при отправке сообщения.');
-    }
-}
