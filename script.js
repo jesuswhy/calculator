@@ -199,11 +199,6 @@ async function fetchCNYRate() {
     }
 }
 
-window.onload = function() {
-    fetchCNYRate();
-    fetchUSDRate();
-};
-
 function openModal(modalId) {
     document.getElementById(modalId).style.display = 'flex';
 }
@@ -348,3 +343,36 @@ window.onclick = function(event) {
         }
     });
 };
+
+function switchCalculator() {
+    const isChecked = document.getElementById('calculatorSwitch').checked;
+    const sellCalculator = document.querySelector('#calcFormSell').closest('.container');
+    const buyCalculator = document.querySelector('#calcFormBuy').closest('.container');
+
+    if (isChecked) {
+        sellCalculator.style.display = 'none'; // Скрыть калькулятор продажи
+        buyCalculator.style.display = 'block'; // Показать калькулятор закупки
+        document.querySelector('h1').textContent = '🛒 ЗАКУПКА'; // Обновить заголовок
+    } else {
+        sellCalculator.style.display = 'block'; // Показать калькулятор продажи
+        buyCalculator.style.display = 'none'; // Скрыть калькулятор закупки
+        document.querySelector('h1').textContent = '🏷️ ПРОДАЖА'; // Обновить заголовок
+    }
+}
+
+
+
+// Прячем форму Закупки при загрузке страницы
+window.onload = function() {
+    fetchCNYRate();
+    fetchUSDRate();
+    switchCalculator(); 
+};
+
+
+  
+
+// Вызываем эту функцию при загрузке страницы, чтобы по умолчанию показать "Продажу"
+document.addEventListener("DOMContentLoaded", function() {
+    switchCalculator();
+});
