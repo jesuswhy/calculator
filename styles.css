@@ -82,7 +82,7 @@ input:focus {
 }
 
 button {
-  background-color: #255af5; /* Ярко-синий цвет кнопки */
+  background-color: #009688; /* Ярко-синий цвет кнопки */
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -109,7 +109,7 @@ p {
   justify-content: center;  
   align-items: center;    
   background-color: #ffffff;
-  border: 2px solid #255af5; 
+  border: 2px solid #009688; 
   border-radius: 10px;
   padding: 20px;
   text-align: center;
@@ -380,7 +380,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #255af5;
+  background-color: #009688;
   transition: .4s;
   border-radius: 34px;
 }
@@ -398,9 +398,10 @@ p {
 }
 
 input:checked + .slider {
-  background-color: #1a44c2; /* Цвет переключателя при включении */
+  background-color: #8E24AA; /* Цвет переключателя при включении */
 }
 
 input:checked + .slider:before {
   transform: translateX(26px);
 }
+
