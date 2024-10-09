@@ -1,6 +1,6 @@
 async function fetchUSDRate() {
     const url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.cbr.ru/scripts/XML_daily.asp');
- 
+
     try {
         const response = await fetch(url);
 
@@ -348,17 +348,28 @@ function switchCalculator() {
     const isChecked = document.getElementById('calculatorSwitch').checked;
     const sellCalculator = document.querySelector('#calcFormSell').closest('.container');
     const buyCalculator = document.querySelector('#calcFormBuy').closest('.container');
+    const resultBox = document.querySelectorAll('.result-box'); // Все блоки с результатами
+    const calcButtonSell = document.querySelector('#calcFormSell button'); // Кнопка расчета для продажи
+    const calcButtonBuy = document.querySelector('#calcFormBuy button'); // Кнопка расчета для закупки
 
     if (isChecked) {
         sellCalculator.style.display = 'none'; // Скрыть калькулятор продажи
         buyCalculator.style.display = 'block'; // Показать калькулятор закупки
-        document.querySelector('h1').textContent = '🛒 ЗАКУПКА'; // Обновить заголовок
+
+        // Изменить цвета для закупки
+        calcButtonBuy.style.backgroundColor = '#FF6F61'; // Оранжевая кнопка для закупки
+        resultBox.forEach(box => box.style.borderColor = '#FF6F61'); // Изменить рамку блока с результатами
     } else {
         sellCalculator.style.display = 'block'; // Показать калькулятор продажи
         buyCalculator.style.display = 'none'; // Скрыть калькулятор закупки
-        document.querySelector('h1').textContent = '🏷️ ПРОДАЖА'; // Обновить заголовок
+
+        // Изменить цвета для продажи
+        calcButtonSell.style.backgroundColor = '#009688'; // Зеленая кнопка для продажи
+        resultBox.forEach(box => box.style.borderColor = '#009688'); // Изменить рамку блока с результатами
     }
 }
+
+
 
 
 
