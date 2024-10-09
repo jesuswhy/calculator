@@ -82,7 +82,7 @@ input:focus {
 }
 
 button {
-  background-color: #ff6600; /* Ярко-синий цвет кнопки */
+  background-color: #255af5; /* Ярко-синий цвет кнопки */
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -93,7 +93,7 @@ button {
 }
 
 button:hover {
-  background-color: #923b00; /* Темный оттенок синего при наведении */
+  background-color: #0029a4; /* Темный оттенок синего при наведении */
   transform: translateY(-2px); 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -109,7 +109,7 @@ p {
   justify-content: center;  
   align-items: center;    
   background-color: #ffffff;
-  border: 2px solid #0088cc; 
+  border: 2px solid #255af5; 
   border-radius: 10px;
   padding: 20px;
   text-align: center;
@@ -120,10 +120,15 @@ p {
   margin-right: 10px;
 }
 
+.result-box h3 {
+  margin: 2px 0;
+  font-size: 14px;
+  font-weight: 200;
+}
 
 .result-box p {
   margin: 2px 0;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {
@@ -375,7 +380,7 @@ p {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ff6600;
+  background-color: #255af5;
   transition: .4s;
   border-radius: 34px;
 }
@@ -393,7 +398,7 @@ p {
 }
 
 input:checked + .slider {
-  background-color: #ff6600; /* Цвет переключателя при включении */
+  background-color: #1a44c2; /* Цвет переключателя при включении */
 }
 
 input:checked + .slider:before {
