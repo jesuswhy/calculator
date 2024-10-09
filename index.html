@@ -11,136 +11,134 @@
 </head>
 <body>
 
-  <div class="currency-block">
+<div class="currency-block">
     <p>
-      <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/dollar.svg" alt="USD" onclick="openModal('usdTip')">
-      <span id="usdRate">Загрузка...</span>
+        <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/dollar.svg" alt="USD" onclick="openModal('usdTip')">
+        <span id="usdRate">Загрузка...</span>
     </p>
-
     <p>
-      <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/yuan.svg" alt="CNY" onclick="openModal('cnyTip')">
-      <span id="cnyRate">Загрузка...</span>
+        <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/yuan.svg" alt="CNY" onclick="openModal('cnyTip')">
+        <span id="cnyRate">Загрузка...</span>
     </p>
-  </div>
+</div>
 
-  <div id="usdTip" class="modal">
+<div id="usdTip" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('usdTip')">&times;</span>
-      <p>Источник: ЦБ РФ</p>
+        <span class="close" onclick="closeModal('usdTip')">&times;</span>
+        <p>Источник: ЦБ РФ</p>
     </div>
-  </div>
+</div>
 
-  <div id="cnyTip" class="modal">
+<div id="cnyTip" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeModal('cnyTip')">&times;</span>
-      <p id="cnySource">Источник: MOEX</p>
+        <span class="close" onclick="closeModal('cnyTip')">&times;</span>
+        <p id="cnySource">Источник: MOEX</p>
     </div>
-  </div>
+</div>
 
-  <div class="container">
+<div class="calculator-switch">
+    <label class="mode-label">Продажа</label>
+    <label class="switch">
+        <input type="checkbox" id="calculatorSwitch" onchange="switchCalculator()">
+        <span class="slider"></span>
+    </label>
+    <label class="mode-label">Закупка</label>
+</div>
+
+<div class="container">
     <h1>🏷️ ПРОДАЖА</h1>
-    
     <form id="calcFormSell">
-      <label for="purchasePrice">Цена закупки (₽):</label>
-      <input type="number" id="purchasePrice" name="purchasePrice" placeholder="Цена за тонну с НДС" required>
+        <label for="purchasePrice">Цена закупки (₽):</label>
+        <input type="number" id="purchasePrice" name="purchasePrice" placeholder="Цена за тонну с НДС" required>
 
-      <label for="logisticsCostUSD">Стоимость логистики ($):</label>
-      <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" placeholder="Цена за тонну" required>
+        <label for="logisticsCostUSD">Стоимость логистики ($):</label>
+        <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" placeholder="Цена за тонну" required>
 
-      <label for="customDuty">Пошлина (%):</label>
-      <input type="number" id="customDuty" value="0" name="customDuty" required>
+        <label for="customDuty">Пошлина (%):</label>
+        <input type="number" id="customDuty" value="0" name="customDuty" required>
 
-      <label for="advance">Размер аванса покупателя (%):</label>
-      <input type="number" id="advance" value="0" name="advance" required>
+        <label for="advance">Размер аванса покупателя (%):</label>
+        <input type="number" id="advance" value="0" name="advance" required>
 
-      <label for="moneyTerm">Срок денег (в днях):</label>
-      <input type="number" id="moneyTerm" value="110" name="moneyTerm" required>
+        <label for="moneyTerm">Срок денег (в днях):</label>
+        <input type="number" id="moneyTerm" value="120" name="moneyTerm" required>
 
-      <label for="markup">Маржа (%):</label>
-      <input type="number" id="markup" value="3" name="markup" required>
+        <label for="markup">Маржа (%):</label>
+        <input type="number" id="markup" value="3" name="markup" required>
 
-      <button type="button" onclick="calculatePrice()">
-        <i class="fas fa-calculator"></i> Рассчитать
-      </button>
-      
+        <button type="button" onclick="calculatePrice()">
+            <i class="fas fa-calculator"></i> Рассчитать
+        </button>
     </form>
     <div class="result-container">
-      <button class="telegram-button" onclick="openTelegramModal('sell')">
-        <i class="fab fa-telegram-plane"></i>
-      </button>
-      
-      <div class="result-box">
-        <p>Цена продажи:</p>
-        <p id="result">0 ¥/тн</p>
-      </div>
+        <button class="telegram-button" onclick="openTelegramModal('sell')">
+            <i class="fab fa-telegram-plane"></i>
+        </button>
+        <div class="result-box">
+            <p>Цена продажи:</p>
+            <p id="result">0 ¥/тн</p>
+        </div>
     </div>
-    
-    
-  </div>
+</div>
 
-  <div class="container">
+<div class="container">
     <h1>🛒 ЗАКУПКА</h1>
-    
     <form id="calcFormBuy">
-      <label for="marketPrice2">Цена продажи (¥):</label>
-      <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
+        <label for="marketPrice2">Цена продажи (¥):</label>
+        <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
 
-      <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
-      <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
+        <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
+        <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
 
-      <label for="customDuty2">Пошлина (%):</label>
-      <input type="number" id="customDuty2" value="0" name="customDuty2" required>
+        <label for="customDuty2">Пошлина (%):</label>
+        <input type="number" id="customDuty2" value="0" name="customDuty2" required>
 
-      <label for="advance2">Размер аванса покупателя (%):</label>
-      <input type="number" id="advance2" value="0" name="advance2" required>
+        <label for="advance2">Размер аванса покупателя (%):</label>
+        <input type="number" id="advance2" value="0" name="advance2" required>
 
-      <label for="moneyTerm2">Срок денег (в днях):</label>
-      <input type="number" id="moneyTerm2" value="110" name="moneyTerm2" required>
+        <label for="moneyTerm2">Срок денег (в днях):</label>
+        <input type="number" id="moneyTerm2" value="120" name="moneyTerm2" required>
 
-      <label for="markup2">Маржа (%):</label>
-      <input type="number" id="markup2" value="3" name="markup2" required>
+        <label for="markup2">Маржа (%):</label>
+        <input type="number" id="markup2" value="3" name="markup2" required>
 
-      <button type="button" onclick="calculatePurchasePrice()">
-        <i class="fas fa-calculator"></i> Рассчитать
-      </button>
+        <button type="button" onclick="calculatePurchasePrice()">
+            <i class="fas fa-calculator"></i> Рассчитать
+        </button>
     </form>
     
     <div class="result-container">
-      <button class="telegram-button" onclick="openTelegramModal('buy')">
-        <i class="fab fa-telegram-plane"></i>
-      </button>
-      
-      <div class="result-box">
-        <p>Цена закупки с НДС:</p>
-        <p id="purchasePriceResult">0 ₽/тн</p>
-      </div>
+        <button class="telegram-button" onclick="openTelegramModal('buy')">
+            <i class="fab fa-telegram-plane"></i>
+        </button>
+        <div class="result-box">
+            <p>Цена закупки с НДС:</p>
+            <p id="purchasePriceResult">0 ₽/тн</p>
+        </div>
     </div>
+</div>
 
-  </div>
-
-  <div id="successAlert" class="custom-alert">
+<div id="successAlert" class="custom-alert">
     <div class="custom-alert-content">
-      <span class="close-alert" onclick="closeAlert()">&times;</span>
-      <p>Сообщение успешно отправлено!</p>
-      <button class="alert-button" onclick="closeAlert()">ОК</button>
+        <span class="close-alert" onclick="closeAlert()">&times;</span>
+        <p>Сообщение успешно отправлено!</p>
+        <button class="alert-button" onclick="closeAlert()">ОК</button>
     </div>
-  </div>
-  
+</div>
 
-  <div id="telegramModal" class="modal">
+<div id="telegramModal" class="modal">
     <div class="modal-content">
-      <span class="close" onclick="closeTelegramModal()">&times;</span>
-      <h2>Выберите чат для отправки</h2>
-      <select id="telegramChatSelect">
-        <option value="">-- Выберите чат --</option>
-        <option value="buyer">Покупатели</option>
-        <option value="supplier">Поставщики</option>
-      </select>
-      <button type="button" onclick="sendTelegram()">Отправить</button>
+        <span class="close" onclick="closeTelegramModal()">&times;</span>
+        <h2>Выберите чат для отправки</h2>
+        <select id="telegramChatSelect">
+            <option value="">-- Выберите чат --</option>
+            <option value="buyer">Покупатели</option>
+            <option value="supplier">Поставщики</option>
+        </select>
+        <button type="button" onclick="sendTelegram()">Отправить</button>
     </div>
-  </div>
+</div>
 
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
-
 </html>
