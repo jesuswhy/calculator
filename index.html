@@ -3,173 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SalesBooster</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Подключение Font Awesome для иконок -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <title>Калькулятор</title>
+    <link rel="icon" type="image/svg+xml" href="https://cdn-icons-png.flaticon.com/128/7324/7324453.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header class="main-header">
-        <div class="container">
-            <div class="logo">
-                <h1>SalesBooster</h1>
-            </div>
-            <nav class="main-nav">
-                <ul>
-                    <li><a href="#advantages">Преимущества</a></li>
-                    <li><a href="#methodology">Как работает</a></li>
-                    <li><a href="#pricing">Цены</a></li>
-                    <li><a href="#testimonials">Отзывы</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
 
-    <section class="hero">
-        <div class="container">
-            <h1 class="animated-title">SalesBooster</h1>
-            <p>Бот автокорреции цен для продавцов на Kaspi</p>
-            <a href="#cta" class="btn-primary">Начать сейчас</a>
-        </div>
-    </section>
+<div class="currency-block">
+    <p>
+        <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/dollar.svg" alt="USD" onclick="openModal('usdTip')">
+        <span id="usdRate">Загрузка...</span>
+    </p>
+    <p>
+        <img class="currency-icon" src="https://www.cbr.ru/common/images/icons/yuan.svg" alt="CNY" onclick="openModal('cnyTip')">
+        <span id="cnyRate">Загрузка...</span>
+    </p>
+</div>
 
-    <!-- Преимущества -->
-    <section id="advantages" class="section">
-        <div class="container">
-            <h2>Наши преимущества</h2>
-            <div class="advantages-list">
-                <div class="advantage-item">
-                    <i class="fas fa-chart-line fa-3x"></i>
-                    <h3>Оптимизация цен 24/7</h3>
-                    <p>Наш бот следит за вашими конкурентами и обновляет цены в реальном времени, позволяя вам оставаться конкурентоспособными.</p>
-                </div>
-                <div class="advantage-item">
-                    <i class="fas fa-shopping-cart fa-3x"></i>
-                    <h3>Увеличение продаж</h3>
-                    <p>С увеличением видимости на Kaspi благодаря точной корректировке цен, вы получаете больше заказов и повышаете свою прибыль.</p>
-                </div>
-                <div class="advantage-item">
-                    <i class="fas fa-robot fa-3x"></i>
-                    <h3>Автоматизация процесса</h3>
-                    <p>Забудьте о ручной корректировке цен. Наш бот делает всю работу за вас, экономя ваше время и ресурсы.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<div id="usdTip" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('usdTip')">&times;</span>
+        <p>Источник: ЦБ РФ</p>
+    </div>
+</div>
 
-    <!-- Методика работы -->
-    <section id="methodology" class="section">
-        <div class="container">
-            <h2>Как работает бот</h2>
-            <img src="icon-bot.png" alt="Бот">
-            <p>Наш бот интегрируется с вашим Kaspi аккаунтом, анализирует конкурентов и корректирует цены в реальном времени. Это полностью автоматизированный процесс, который требует минимального вмешательства с вашей стороны.</p>
-        </div>
-    </section>
+<div id="cnyTip" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('cnyTip')">&times;</span>
+        <p id="cnySource">Источник: MOEX</p>
+    </div>
+</div>
 
-    <!-- Демо видео -->
-    <section id="demo" class="section">
-        <div class="container">
-            <h2>Демо видео</h2>
-            <video controls>
-                <source src="demo.mp4" type="video/mp4">
-                Ваш браузер не поддерживает видео.
-            </video>
-        </div>
-    </section>
+<div class="calculator-switch">
+    <label class="mode-label">Продажа</label>
+    <label class="switch">
+        <input type="checkbox" id="calculatorSwitch" onchange="switchCalculator()">
+        <span class="slider"></span>
+    </label>
+    <label class="mode-label">Закупка</label>
+</div>
 
-    <!-- Отзывы -->
-    <section id="testimonials" class="section">
-        <div class="container">
-            <h2>Отзывы</h2>
-            <div class="testimonials-carousel">
-                <div class="testimonial-item active">
-                    <img src="https://cdn-icons-png.flaticon.com/128/195/195083.png" alt="Иван Петров">
-                    <p>“Отличный инструмент, который увеличил наши продажи! Благодаря SalesBooster, мы достигли новых высот.”</p>
-                    <span>- Иван Петров</span>
-                </div>
-                <div class="testimonial-item">
-                    <img src="https://cdn-icons-png.flaticon.com/128/195/195072.png" alt="Ольга Смирнова">
-                    <p>“Быстро и легко внедряется, экономит массу времени. Теперь наши цены всегда актуальны.”</p>
-                    <span>- Ольга Смирнова</span>
-                </div>
-                <div class="testimonial-item">
-                    <img src="https://cdn-icons-png.flaticon.com/128/195/195055.png" alt="Алексей Иванов">
-                    <p>“Замечательное приложение, которое облегчает жизнь! Рекомендую всем продавцам!”</p>
-                    <span>- Алексей Иванов</span>
-                </div>
-                <button class="carousel-button prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-button next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
-            </div>
-        </div>
-    </section>
+<div class="container">
+    <form id="calcFormSell">
+        <label for="purchasePrice">Цена закупки (₽):</label>
+        <input type="number" id="purchasePrice" name="purchasePrice" placeholder="Цена за тонну с НДС" required>
 
+        <label for="logisticsCostUSD">Стоимость логистики ($):</label>
+        <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" placeholder="Цена за тонну" required>
 
-<!-- Цены -->
-<section id="pricing" class="section">
-    <div class="container">
-        <div class="pricing-list">
-            <div class="price-item">
-                <h3>Единый тариф</h3>
-                <p>₸10 000/мес</p>
-                <p>30 дней бесплатного пробного периода</p>
-                <ul class="features-list">
-                    <li><i class="fa-solid fa-check"></i> Безлимитное количество корректировок цен</li>
-                    <li><i class="fa-solid fa-check"></i> Поддержка 24/7</li>
-                    <li><i class="fa-solid fa-check"></i> Полная автоматизация</li>
-                </ul>
-            </div>
+        <label for="customDuty">Пошлина (%):</label>
+        <input type="number" id="customDuty" value="0" name="customDuty" required>
+
+        <label for="advance">Размер аванса покупателя (%):</label>
+        <input type="number" id="advance" value="0" name="advance" required>
+
+        <label for="moneyTerm">Срок кредитования (в днях):</label>
+        <input type="number" id="moneyTerm" value="110" name="moneyTerm" required>
+
+        <label for="markup">Маржа (%):</label>
+        <input type="number" id="markup" value="3" name="markup" required>
+
+        <button type="button" onclick="calculatePrice()">
+            <i class="fas fa-calculator"></i> Рассчитать
+        </button>
+    </form>
+    <div class="result-container">
+        <button class="telegram-button" onclick="openTelegramModal('sell')">
+            <i class="fab fa-telegram-plane"></i>
+        </button>
+        <div class="result-box">
+            <h3>Цена продажи:</h3>
+            <p id="result">0 ¥/тн</p>
         </div>
     </div>
-</section>
+</div>
 
+<div class="container">
+    <form id="calcFormBuy">
+        <label for="marketPrice2">Цена продажи (¥):</label>
+        <input type="number" id="marketPrice2" placeholder="Цена за тонну" required>
 
+        <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
+        <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
 
-    <!-- Call to Action -->
-    <section id="cta" class="section">
-        <div class="container">
-            <h2>Готовы начать?</h2>
-            <a href="#start" class="btn-primary">Начать с SalesBooster</a>
-        </div>
-    </section>
+        <label for="customDuty2">Пошлина (%):</label>
+        <input type="number" id="customDuty2" value="0" name="customDuty2" required>
 
-<!-- FAQ -->
-<section class="faq-section">
-    <h2>Часто задаваемые вопросы</h2>
-    <div class="faq-item">
-        <button class="faq-question">Вопрос 1</button>
-        <div class="faq-answer">
-            <p>Ответ на вопрос 1.</p>
+        <label for="advance2">Размер аванса покупателя (%):</label>
+        <input type="number" id="advance2" value="0" name="advance2" required>
+
+        <label for="moneyTerm2">Срок кредитования (в днях):</label>
+        <input type="number" id="moneyTerm2" value="110" name="moneyTerm2" required>
+
+        <label for="markup2">Маржа (%):</label>
+        <input type="number" id="markup2" value="3" name="markup2" required>
+
+        <button type="button" onclick="calculatePurchasePrice()">
+            <i class="fas fa-calculator"></i> Рассчитать
+        </button>
+    </form>
+    
+    <div class="result-container">
+        <button class="telegram-button" onclick="openTelegramModal('buy')">
+            <i class="fab fa-telegram-plane"></i>
+        </button>
+        <div class="result-box">
+            <h3>Цена закупки с НДС:</h3>
+            <p id="purchasePriceResult">0 ₽/тн</p>
         </div>
     </div>
-    <div class="faq-item">
-        <button class="faq-question">Вопрос 2</button>
-        <div class="faq-answer">
-            <p>Ответ на вопрос 2.</p>
-        </div>
+</div>
+
+<div id="successAlert" class="custom-alert">
+    <div class="custom-alert-content">
+        <span class="close-alert" onclick="closeAlert()">&times;</span>
+        <p>Сообщение успешно отправлено!</p>
+        <button class="alert-button" onclick="closeAlert()">ОК</button>
     </div>
-    <div class="faq-item">
-        <button class="faq-question">Вопрос 3</button>
-        <div class="faq-answer">
-            <p>Ответ на вопрос 3.</p>
-        </div>
+</div>
+
+<div id="telegramModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeTelegramModal()">&times;</span>
+        <h2>Выберите чат для отправки</h2>
+        <select id="telegramChatSelect">
+            <option value="">-- Выберите чат --</option>
+            <option value="buyer">Покупатели</option>
+            <option value="supplier">Поставщики</option>
+        </select>
+        <button type="button" onclick="sendTelegram()">Отправить</button>
     </div>
-</section>
+</div>
 
-
-    <footer>
-        <div class="container">
-            <div class="social-icons">
-                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968764.png" alt="Facebook"></a>
-                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968776.png" alt="Instagram"></a>
-                <a href="#"><img src="https://cdn-icons-png.flaticon.com/128/5968/5968804.png" alt="telegram"></a>
-            </div>
-            <p>&copy; 2024 SalesBooster. Все права защищены.</p>
-        </div>
-    </footer>
-
+<script src="script.js"></script>
 </body>
 </html>
