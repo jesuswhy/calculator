@@ -50,6 +50,13 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }
 
+#calculatorMode {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 24px;
+  transition: opacity 0.3s ease-out;
+}
+
 h1 {
   text-align: center;
   font-size: 36px;
@@ -398,10 +405,69 @@ p {
 }
 
 input:checked + .slider {
-  background-color: #FF6F61; /* Цвет переключателя при включении */
+  background-color: #FF6F61;
+  box-shadow: 0 0 15px rgba(255, 111, 97, 0.5);
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
+  transform: translateX(26px) scale(1.2);
 }
 
+a, button, .slider {
+  transition: all 0.3s ease;
+}
+
+/* Стили для выпадающего списка выбора режима пошлины */
+select {
+  padding: 10px 15px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  color: #333;
+  appearance: none;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+select:hover {
+  background-color: #f1f1f1;
+  border-color: #009688;
+}
+
+select:focus {
+  border-color: #ff6600;
+  box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+}
+
+select option {
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+/* Стили для контейнера выбора режима пошлины */
+.custom-duty-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.custom-duty-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.custom-duty-mode-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.custom-duty-mode-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
