@@ -53,8 +53,24 @@
         <label for="logisticsCostUSD">Стоимость логистики ($):</label>
         <input type="number" id="logisticsCostUSD" name="logisticsCostUSD" placeholder="Цена за тонну" required>
 
-        <label for="customDuty">Пошлина (%):</label>
-        <input type="number" id="customDuty" value="0" name="customDuty" required>
+        <div>
+            <label>Режим ввода пошлины:</label>
+            <select id="customDutyMode" onchange="toggleCustomDutyMode()">
+                <option value="percent">%</option>
+                <option value="absolute">рубли на тонну</option>
+            </select>
+        </div>
+
+        <!-- Поля для пошлины в процентах и абсолютном значении -->
+        <div id="customDutyPercentSection">
+            <label for="customDuty">Пошлина (%):</label>
+            <input type="number" id="customDuty" placeholder="%">
+        </div>
+
+        <div id="customDutyAbsoluteSection" style="display: none;">
+            <label for="customDutyAbsolute">Пошлина (₽):</label>
+            <input type="number" id="customDutyAbsolute" placeholder="₽">
+        </div>
 
         <label for="advance">Размер аванса покупателя (%):</label>
         <input type="number" id="advance" value="0" name="advance" required>
@@ -88,9 +104,24 @@
         <label for="logisticsCostUSD2">Стоимость логистики ($):</label>
         <input type="number" id="logisticsCostUSD2" name="logisticsCostUSD2" placeholder="Цена за тонну" required>
 
-        <label for="customDuty2">Пошлина (%):</label>
-        <input type="number" id="customDuty2" value="0" name="customDuty2" required>
+        <div>
+            <label>Режим ввода пошлины:</label>
+            <select id="customDutyMode" onchange="toggleCustomDutyMode()">
+                <option value="percent">%</option>
+                <option value="absolute">рубли на тонну</option>
+            </select>
+        </div>
 
+        <!-- Поля для пошлины в процентах и абсолютном значении -->
+        <div id="customDutyPercentSection">
+            <label for="customDuty">Пошлина (%):</label>
+            <input type="number" id="customDuty" placeholder="%">
+        </div>
+
+        <div id="customDutyAbsoluteSection" style="display: none;">
+            <label for="customDutyAbsolute">Пошлина (₽):</label>
+            <input type="number" id="customDutyAbsolute" placeholder="₽">
+        </div>
         <label for="advance2">Размер аванса покупателя (%):</label>
         <input type="number" id="advance2" value="0" name="advance2" required>
 
