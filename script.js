@@ -71,7 +71,13 @@ async function fetchUSDRate() {
 
     const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
 
-    const customDuty = (preSalePrice) * customDutyRate;
+    let customDuty = 0;
+    if (customDutyMode === 'percent') {
+        const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100;
+        customDuty = preSalePrice * customDutyRate;
+    } else {
+        customDuty = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
+    }
 
     const salePrice = preSalePrice + customDuty;
 
@@ -96,7 +102,13 @@ function calculatePurchasePrice() {
 
     const salePriceRUB = salePriceCNY * cnyRate;
 
-    const customDuty = salePriceRUB * customDutyRate;
+    let customDuty = 0;
+    if (customDutyMode === 'percent') {
+        const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100;
+        customDuty = preSalePrice * customDutyRate;
+    } else {
+        customDuty = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
+    }
 
     const preSalePrice = salePriceRUB - customDuty;
 
@@ -344,6 +356,23 @@ window.onclick = function(event) {
     });
 };
 
+let currentText = "Продажа"; // Начальный режим
+
+function typeWriter(text, elementId) {
+    let i = 0;
+    let speed = 50; // Скорость печати
+    let element = document.getElementById(elementId);
+    element.innerHTML = ""; // Очищаем блок перед началом анимации
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        }
+    }
+    type();
+}
+
 function switchCalculator() {
     const isChecked = document.getElementById('calculatorSwitch').checked;
     const sellCalculator = document.querySelector('#calcFormSell').closest('.container');
@@ -359,6 +388,7 @@ function switchCalculator() {
         // Изменить цвета для закупки
         calcButtonBuy.style.backgroundColor = '#FF6F61'; // Оранжевая кнопка для закупки
         resultBox.forEach(box => box.style.borderColor = '#FF6F61'); // Изменить рамку блока с результатами
+        currentText = "Закупка";
     } else {
         sellCalculator.style.display = 'block'; // Показать калькулятор продажи
         buyCalculator.style.display = 'none'; // Скрыть калькулятор закупки
@@ -366,11 +396,26 @@ function switchCalculator() {
         // Изменить цвета для продажи
         calcButtonSell.style.backgroundColor = '#009688'; // Зеленая кнопка для продажи
         resultBox.forEach(box => box.style.borderColor = '#009688'); // Изменить рамку блока с результатами
+        currentText = "Продажа";
     }
+
+    typeWriter(currentText, container.id);
 }
 
 
-
+function toggleCustomDutyMode() {
+    const mode = document.getElementById('customDutyMode').value;
+    const percentSection = document.getElementById('customDutyPercentSection');
+    const absoluteSection = document.getElementById('customDutyAbsoluteSection');
+    
+    if (mode === 'percent') {
+        percentSection.style.display = 'block';
+        absoluteSection.style.display = 'none';
+    } else {
+        percentSection.style.display = 'none';
+        absoluteSection.style.display = 'block';
+    }
+}
 
 
 // Прячем форму Закупки при загрузке страницы
@@ -387,3 +432,4 @@ window.onload = function() {
 document.addEventListener("DOMContentLoaded", function() {
     switchCalculator();
 });
+
