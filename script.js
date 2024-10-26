@@ -48,43 +48,40 @@ async function fetchUSDRate() {
 
 
 
-  function calculatePrice() {
+function calculatePrice() {
     const usdRate = parseFloat(document.getElementById('usdRate').textContent) || 0;
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100; 
+    const customDutyRate = parseFloat(document.getElementById('customDutySell').value) / 100; 
     const advance = parseFloat(document.getElementById('advance').value) / 100; 
     const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
     const markup = parseFloat(document.getElementById('markup').value);
     const survey = 600; 
 
     const logisticsCostRUB = logisticsCostUSD * usdRate;
-
     const totalCost = purchasePrice + logisticsCostRUB;
 
-    const interestRate = 0.0003896103896; 
+    const interestRate = 0.0003896103896;
     const remainingAmount = totalCost * (1 - advance);
     const interestCost = remainingAmount * interestRate * moneyTerm;
 
     const VATRefund = purchasePrice / 1.1 * 0.1;
-
     const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
 
-    let customDuty = 0;
-    if (customDutyMode === 'percent') {
-        const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100;
-        customDuty = preSalePrice * customDutyRate;
+    let customDutySell = 0;
+    if (document.getElementById('customDutyMode').value === 'percent') {
+        customDutySell = preSalePrice * customDutyRate;
     } else {
-        customDuty = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
+        customDutySell = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
     }
 
     const salePrice = preSalePrice + customDuty;
-
     const salePriceCNY = salePrice / cnyRate - 20;
 
-    document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`; 
+    document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`;
 }
+
 
 
 
@@ -94,41 +91,37 @@ function calculatePurchasePrice() {
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const salePriceCNY = parseFloat(document.getElementById('marketPrice2').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD2').value);
-    const customDutyRate = parseFloat(document.getElementById('customDuty2').value) / 100; 
-    const advance = parseFloat(document.getElementById('advance2').value) / 100; 
+    const customDutyRate = parseFloat(document.getElementById('customDutyBuy').value) / 100;
+    const advance = parseFloat(document.getElementById('advance2').value) / 100;
     const moneyTerm = parseInt(document.getElementById('moneyTerm2').value);
     const markup = parseFloat(document.getElementById('markup2').value);
-    const survey = 600; 
+    const survey = 600;
 
     const salePriceRUB = salePriceCNY * cnyRate;
 
-    let customDuty = 0;
-    if (customDutyMode === 'percent') {
-        const customDutyRate = parseFloat(document.getElementById('customDuty').value) / 100;
-        customDuty = preSalePrice * customDutyRate;
+    let customDutyBuy = 0;
+    if (document.getElementById('customDutyMode').value === 'percent') {
+        customDutyBuy = salePriceRUB * customDutyRate;
     } else {
-        customDuty = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
+        customDutyBuy = parseFloat(document.getElementById('customDutyAbsolute2').value) || 0;
     }
 
-    const preSalePrice = salePriceRUB - customDuty;
-
+    const preSalePrice = salePriceRUB - customDuty2;
     const VATRefund = (preSalePrice - survey) / 1.1 * 0.1;
-
     const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100);
 
-    const interestRate = 0.0003896103896; 
-    const remainingAmount = totalCost * (1 - advance); 
+    const interestRate = 0.0003896103896;
+    const remainingAmount = totalCost * (1 - advance);
     const interestCost = remainingAmount * interestRate * moneyTerm;
 
     const purchasePrice = totalCost - interestCost;
-
     const logisticsCostRUB = logisticsCostUSD * usdRate;
-
     const finalPurchasePrice = purchasePrice - logisticsCostRUB - survey;
 
-document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`; 
-
+    document.getElementById('purchasePriceResult').textContent = `${finalPurchasePrice.toFixed(0)} ₽/тн`;
 }
+
+
 
 
 
@@ -403,17 +396,25 @@ function switchCalculator() {
 }
 
 
-function toggleCustomDutyMode() {
-    const mode = document.getElementById('customDutyMode').value;
-    const percentSection = document.getElementById('customDutyPercentSection');
-    const absoluteSection = document.getElementById('customDutyAbsoluteSection');
-    
+function toggleCustomDutyModeSell() {
+    const mode = document.getElementById('customDutyModeSell').value;
     if (mode === 'percent') {
-        percentSection.style.display = 'block';
-        absoluteSection.style.display = 'none';
+        document.getElementById('customDutyPercentSectionSell').style.display = 'block';
+        document.getElementById('customDutyAbsoluteSectionSell').style.display = 'none';
     } else {
-        percentSection.style.display = 'none';
-        absoluteSection.style.display = 'block';
+        document.getElementById('customDutyPercentSectionSell').style.display = 'none';
+        document.getElementById('customDutyAbsoluteSectionSell').style.display = 'block';
+    }
+}
+
+function toggleCustomDutyModeBuy() {
+    const mode = document.getElementById('customDutyModeBuy').value;
+    if (mode === 'percent') {
+        document.getElementById('customDutyPercentSectionBuy').style.display = 'block';
+        document.getElementById('customDutyAbsoluteSectionBuy').style.display = 'none';
+    } else {
+        document.getElementById('customDutyPercentSectionBuy').style.display = 'none';
+        document.getElementById('customDutyAbsoluteSectionBuy').style.display = 'block';
     }
 }
 
