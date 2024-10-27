@@ -53,11 +53,10 @@ function calculatePrice() {
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const purchasePrice = parseFloat(document.getElementById('purchasePrice').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD').value);
-    const customDutyRate = parseFloat(document.getElementById('customDutySell').value) / 100; 
-    const advance = parseFloat(document.getElementById('advance').value) / 100; 
+    const advance = parseFloat(document.getElementById('advance').value) / 100;
     const moneyTerm = parseInt(document.getElementById('moneyTerm').value);
     const markup = parseFloat(document.getElementById('markup').value);
-    const survey = 600; 
+    const survey = 600;
 
     const logisticsCostRUB = logisticsCostUSD * usdRate;
     const totalCost = purchasePrice + logisticsCostRUB;
@@ -70,13 +69,15 @@ function calculatePrice() {
     const preSalePrice = ((totalCost + interestCost + survey) - VATRefund) * (1 + markup / 100);
 
     let customDutySell = 0;
-    if (document.getElementById('customDutyMode').value === 'percent') {
+    const customDutyMode = document.getElementById('customDutyModeSell').value;
+    if (customDutyMode === 'percent') {
+        const customDutyRate = parseFloat(document.getElementById('customDutySell').value) / 100;
         customDutySell = preSalePrice * customDutyRate;
     } else {
-        customDutySell = parseFloat(document.getElementById('customDutyAbsolute').value) || 0;
+        customDutySell = parseFloat(document.getElementById('customDutyAbsoluteSell').value) || 0;
     }
 
-    const salePrice = preSalePrice + customDuty;
+    const salePrice = preSalePrice + customDutySell;
     const salePriceCNY = salePrice / cnyRate - 20;
 
     document.getElementById('result').textContent = `${salePriceCNY.toFixed(0)} ¥/тн`;
@@ -91,7 +92,6 @@ function calculatePurchasePrice() {
     const cnyRate = parseFloat(document.getElementById('cnyRate').textContent) || 0;
     const salePriceCNY = parseFloat(document.getElementById('marketPrice2').value);
     const logisticsCostUSD = parseFloat(document.getElementById('logisticsCostUSD2').value);
-    const customDutyRate = parseFloat(document.getElementById('customDutyBuy').value) / 100;
     const advance = parseFloat(document.getElementById('advance2').value) / 100;
     const moneyTerm = parseInt(document.getElementById('moneyTerm2').value);
     const markup = parseFloat(document.getElementById('markup2').value);
@@ -100,13 +100,15 @@ function calculatePurchasePrice() {
     const salePriceRUB = salePriceCNY * cnyRate;
 
     let customDutyBuy = 0;
-    if (document.getElementById('customDutyMode').value === 'percent') {
+    const customDutyMode = document.getElementById('customDutyModeBuy').value;
+    if (customDutyMode === 'percent') {
+        const customDutyRate = parseFloat(document.getElementById('customDutyBuy').value) / 100;
         customDutyBuy = salePriceRUB * customDutyRate;
     } else {
-        customDutyBuy = parseFloat(document.getElementById('customDutyAbsolute2').value) || 0;
+        customDutyBuy = parseFloat(document.getElementById('customDutyAbsoluteBuy').value) || 0;
     }
 
-    const preSalePrice = salePriceRUB - customDuty2;
+    const preSalePrice = salePriceRUB - customDutyBuy;
     const VATRefund = (preSalePrice - survey) / 1.1 * 0.1;
     const totalCost = (preSalePrice + VATRefund) / (1 + markup / 100);
 
